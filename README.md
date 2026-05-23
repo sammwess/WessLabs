@@ -1,6 +1,6 @@
 # Wess Labs
 
-Landing page pessoal — experimentos em code, IA, música, café e cubos.
+Landing page pessoal — experimentos em code, IA, música, Bitcoin e cubos.
 
 🌐 [wesslabs.com](https://wesslabs.com)
 
