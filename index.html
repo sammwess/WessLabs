@@ -8,7 +8,7 @@
     <meta property="og:description" content="Experimentos pessoais em code, IA, música, Bitcoin e cubos.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wesslabs.com">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%232563EB'/%3E%3Cstop offset='100%25' stop-color='%237C3AED'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='700' font-size='20' fill='white'%3EW%3C/text%3E%3C/svg%3E">
     <title>Wess Labs - Experimentos Pessoais</title>
     <style>
         :root {
@@ -27,17 +27,38 @@
             overflow-x: hidden;
         }
         header {
-            padding: 1.5rem 5%;
-            border-bottom: 1px solid #1E2530;
+            padding: 0 5%;
+            border-bottom: 1px solid #E2E8F0;
             position: sticky; top: 0; backdrop-filter: blur(20px); z-index: 10;
-            background: rgba(245, 247, 250, 0.9);
+            background: rgba(245, 247, 250, 0.92);
+            height: 60px;
         }
-        nav { display: flex; align-items: center; justify-content: center; gap: 2rem; }
+        nav { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+        .nav-brand {
+            display: flex; align-items: center; gap: 0.6rem;
+            text-decoration: none; flex-shrink: 0;
+        }
+        .nav-brand-icon {
+            width: 28px; height: 28px; border-radius: 7px;
+            background: linear-gradient(135deg, #2563EB, #7C3AED);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-weight: 700; font-size: 0.95rem;
+        }
+        .nav-brand-text {
+            font-weight: 700; font-size: 1.05rem; color: var(--text);
+            letter-spacing: -0.01em;
+        }
+        .nav-right { display: flex; align-items: center; gap: 0.25rem; }
         nav ul {
-            list-style: none; display: flex; gap: 2rem; justify-content: center;
+            list-style: none; display: flex; gap: 0.25rem;
         }
-        nav a { color: var(--text-dim); text-decoration: none; font-weight: 500; transition: all 0.3s; }
-        nav a:hover, nav a.active { color: var(--accent); }
+        nav a {
+            color: var(--text-dim); text-decoration: none; font-weight: 500;
+            font-size: 0.9rem; transition: all 0.2s;
+            padding: 0.4rem 0.85rem; border-radius: 8px;
+        }
+        nav a:hover { color: var(--text); background: rgba(0,0,0,0.04); }
+        nav a.active { color: var(--accent); background: #EEF2FF; }
         .lang-selector {
             position: relative;
         }
@@ -116,8 +137,10 @@
         .badge-private { background: #F1F5F9; color: var(--text-dim); }
         footer { text-align: center; padding: 2rem; background: #EDF0F5; color: var(--text-dim); font-size: 0.9rem; }
         @media (max-width: 768px) {
-            nav { flex-wrap: wrap; }
-            nav ul { flex-direction: column; gap: 1rem; align-items: center; }
+            header { padding: 0 4%; }
+            .nav-brand-text { display: none; }
+            nav ul { gap: 0.1rem; }
+            nav a { font-size: 0.82rem; padding: 0.35rem 0.6rem; }
             .hero { padding: 3rem 5% 2rem; }
             .projects { grid-template-columns: 1fr; }
         }
@@ -126,18 +149,23 @@
 <body>
     <header>
         <nav>
-            <ul>
-                <li><a href="#home" class="active">Labs</a></li>
-                <li><a href="#projects" data-i18n="nav.projects">Projetos</a></li>
-                <li><a href="#about" data-i18n="nav.about">Sobre</a></li>
-                <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
-            </ul>
-            <div class="lang-selector" id="langSelector">
-                <button class="lang-btn" id="langBtn">
-                    <span id="langLabel">PT</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </button>
-                <div class="lang-dropdown" id="langDropdown"></div>
+            <a href="#home" class="nav-brand">
+                <div class="nav-brand-icon">W</div>
+                <span class="nav-brand-text">Wess Labs</span>
+            </a>
+            <div class="nav-right">
+                <ul>
+                    <li><a href="#projects" data-i18n="nav.projects">Projetos</a></li>
+                    <li><a href="#about" data-i18n="nav.about">Sobre</a></li>
+                    <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
+                </ul>
+                <div class="lang-selector" id="langSelector">
+                    <button class="lang-btn" id="langBtn">
+                        <span id="langLabel">PT</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown"></div>
+                </div>
             </div>
         </nav>
     </header>
