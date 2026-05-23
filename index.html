@@ -8,276 +8,891 @@
     <meta property="og:description" content="Experimentos pessoais em code, IA, música, Bitcoin e cubos.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wesslabs.com">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%232563EB'/%3E%3Cstop offset='100%25' stop-color='%237C3AED'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='700' font-size='20' fill='white'%3EW%3C/text%3E%3C/svg%3E">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23122033'/%3E%3Cpath d='M16 7.2 24.1 11.8 16 16.4 7.9 11.8Z' fill='%23F6F0E5'/%3E%3Cpath d='M7.9 13.4 15 17.5v8.1l-7.1-4.1Z' fill='%238EA0B8'/%3E%3Cpath d='M24.1 13.4 17 17.5v8.1l7.1-4.1Z' fill='%230B72FF'/%3E%3Ccircle cx='25.4' cy='10.5' r='1.8' fill='%23FF8A4C'/%3E%3C/svg%3E">
     <title>Wess Labs - Experimentos Pessoais</title>
-    <style>
-        :root {
-            --bg: #F5F7FA;
-            --accent: #2563EB;
-            --text: #475569;
-            --text-dim: #94A3B8;
-            --card-bg: #FFFFFF;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        header {
-            padding: 0 5%;
-            border-bottom: 1px solid #E2E8F0;
-            position: sticky; top: 0; backdrop-filter: blur(20px); z-index: 10;
-            background: rgba(245, 247, 250, 0.92);
-            height: 60px;
-        }
-        nav { display: flex; align-items: center; justify-content: space-between; height: 100%; }
-        .nav-brand {
-            display: flex; align-items: center; gap: 0.6rem;
-            text-decoration: none; flex-shrink: 0;
-        }
-        .nav-brand-icon {
-            width: 28px; height: 28px; border-radius: 7px;
-            background: linear-gradient(135deg, #2563EB, #7C3AED);
-            display: flex; align-items: center; justify-content: center;
-            color: #fff; font-weight: 700; font-size: 0.95rem;
-        }
-        .nav-brand-text {
-            font-weight: 700; font-size: 1.05rem; color: var(--text);
-            letter-spacing: -0.01em;
-        }
-        .nav-right { display: flex; align-items: center; gap: 0.25rem; }
-        nav ul {
-            list-style: none; display: flex; gap: 0.25rem;
-        }
-        nav a {
-            color: var(--text-dim); text-decoration: none; font-weight: 500;
-            font-size: 0.9rem; transition: all 0.2s;
-            padding: 0.4rem 0.85rem; border-radius: 8px;
-        }
-        nav a:hover { color: var(--text); background: rgba(0,0,0,0.04); }
-        nav a.active { color: var(--accent); background: #EEF2FF; }
-        .lang-selector {
-            position: relative;
-        }
-        .lang-btn {
-            background: transparent; border: 1px solid #E2E8F0; border-radius: 8px;
-            color: var(--text-dim); padding: 0.35rem 0.7rem; font-size: 0.8rem;
-            cursor: pointer; display: flex; align-items: center; gap: 0.35rem;
-            transition: all 0.3s;
-        }
-        .lang-btn:hover { border-color: var(--accent); color: var(--text); }
-        .lang-btn svg { width: 12px; height: 12px; transition: transform 0.2s; }
-        .lang-selector.open .lang-btn svg { transform: rotate(180deg); }
-        .lang-dropdown {
-            display: none; position: absolute; top: calc(100% + 0.5rem); right: 0;
-            background: var(--card-bg); border: 1px solid #E2E8F0; border-radius: 12px;
-            padding: 0.5rem; min-width: 150px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            max-height: 320px; overflow-y: auto;
-        }
-        .lang-selector.open .lang-dropdown { display: block; }
-        .lang-option {
-            display: block; width: 100%; background: none; border: none;
-            color: var(--text-dim); padding: 0.45rem 0.75rem; font-size: 0.8rem;
-            text-align: left; cursor: pointer; border-radius: 8px; transition: all 0.2s;
-        }
-        .lang-option:hover { background: #F1F5F9; color: var(--text); }
-        .lang-option.active { color: var(--accent); }
-        .hero {
-            text-align: center; padding: 5rem 5% 3rem; max-width: 800px; margin: 0 auto;
-        }
-        .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem); margin-bottom: 1rem;
-            background: linear-gradient(135deg, #2563EB, #7C3AED); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .hero p { font-size: 1.3rem; color: var(--text-dim); margin-bottom: 2rem; }
-        .cta {
-            background: var(--accent); color: #FFFFFF; padding: 1rem 2rem; border: none;
-            font-size: 1.1rem; font-weight: 600; border-radius: 50px; cursor: pointer;
-            transition: transform 0.3s; text-decoration: none; display: inline-block;
-        }
-        .cta:hover { transform: scale(1.05); }
-        .section { padding: 5rem 5%; max-width: 1200px; margin: 0 auto; }
-        .section-title { text-align: center; margin-bottom: 3rem; font-size: 2.5rem; }
-        .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; }
-        .project-card {
-            background: var(--card-bg); border-radius: 20px; padding: 2rem; transition: all 0.4s;
-            border: 1px solid #E2E8F0; position: relative; overflow: hidden;
-            display: flex; flex-direction: column;
-        }
-        .project-card:hover {
-            transform: translateY(-6px); box-shadow: 0 16px 32px rgba(37,99,235,0.1);
-            border-color: var(--accent);
-        }
-        .project-card h3 { color: var(--accent); margin-bottom: 0.75rem; font-size: 1.25rem; }
-        .project-card p { color: var(--text-dim); margin-bottom: 1.25rem; flex: 1; font-size: 0.95rem; }
-        .card-bottom { margin-top: auto; }
-        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .tech-tag { background: #F1F5F9; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; color: var(--text-dim); }
-        .project-link {
-            display: inline-flex; align-items: center; gap: 0.4rem;
-            margin-bottom: 1rem; padding: 0.5rem 1.2rem;
-            color: var(--accent); text-decoration: none;
-            font-weight: 600; font-size: 0.85rem;
-            border: 1px solid var(--accent); border-radius: 50px;
-            transition: all 0.3s;
-        }
-        .project-link:hover { background: var(--accent); color: #FFFFFF; }
-        .project-link svg { width: 14px; height: 14px; transition: transform 0.3s; }
-        .project-link:hover svg { transform: translateX(3px); }
-        .badge {
-            display: inline-block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 0.05em; padding: 0.2rem 0.6rem; border-radius: 20px; margin-left: 0.5rem;
-            vertical-align: middle;
-        }
-        .badge-public { background: #DBEAFE; color: #1D4ED8; }
-        .badge-private { background: #F1F5F9; color: var(--text-dim); }
-        footer { text-align: center; padding: 2rem; background: #EDF0F5; color: var(--text-dim); font-size: 0.9rem; }
-        @media (max-width: 768px) {
-            header { padding: 0 4%; }
-            .nav-brand-text { display: none; }
-            nav ul { gap: 0.1rem; }
-            nav a { font-size: 0.82rem; padding: 0.35rem 0.6rem; }
-            .hero { padding: 3rem 5% 2rem; }
-            .projects { grid-template-columns: 1fr; }
-        }
-    </style>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+        <style>
+            :root {
+                --bg: #f6f0e5;
+                --bg-2: #eff5ff;
+                --surface: rgba(255, 255, 255, 0.72);
+                --surface-line: rgba(255, 255, 255, 0.72);
+                --line: rgba(20, 32, 51, 0.1);
+                --text: #142033;
+                --text-muted: #5e6a7d;
+                --text-soft: #8a94a5;
+                --accent: #0b72ff;
+                --accent-2: #22c7a2;
+                --accent-3: #ff8a4c;
+                --accent-gradient: linear-gradient(135deg, #0b72ff 0%, #22c7a2 58%, #ff8a4c 100%);
+                --shadow-soft: 0 18px 48px rgba(18, 35, 64, 0.12);
+                --shadow-card: 0 22px 56px rgba(18, 35, 64, 0.12);
+                --radius-xl: 44px;
+                --radius-lg: 32px;
+                --container: min(1180px, calc(100vw - 32px));
+            }
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            html { scroll-behavior: smooth; }
+            body {
+                font-family: 'Manrope', sans-serif;
+                background:
+                    radial-gradient(circle at top left, rgba(11, 114, 255, 0.16), transparent 30%),
+                    radial-gradient(circle at top right, rgba(34, 199, 162, 0.14), transparent 26%),
+                    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 48%, #edf6f2 100%);
+                color: var(--text);
+                line-height: 1.6;
+                overflow-x: hidden;
+                min-height: 100vh;
+                position: relative;
+                isolation: isolate;
+            }
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                background-image:
+                    linear-gradient(rgba(20, 32, 51, 0.04) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(20, 32, 51, 0.04) 1px, transparent 1px);
+                background-size: 72px 72px;
+                opacity: 0.45;
+                pointer-events: none;
+                z-index: -2;
+            }
+            body::after {
+                content: "";
+                position: fixed;
+                inset: auto 4% 10% auto;
+                width: min(36vw, 440px);
+                aspect-ratio: 1;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(255, 138, 76, 0.16), transparent 72%);
+                filter: blur(12px);
+                pointer-events: none;
+                z-index: -1;
+            }
+            ::selection {
+                background: rgba(11, 114, 255, 0.18);
+                color: var(--text);
+            }
+            a, button { font: inherit; }
+            section[id] { scroll-margin-top: 7.5rem; }
+            header {
+                position: sticky;
+                top: 18px;
+                z-index: 20;
+                padding-top: 1rem;
+            }
+            nav {
+                width: var(--container);
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                padding: 0.9rem 1rem;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.68);
+                border: 1px solid rgba(255, 255, 255, 0.88);
+                backdrop-filter: blur(24px);
+                box-shadow: var(--shadow-soft);
+            }
+            .nav-brand {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.68rem;
+                color: var(--text);
+                text-decoration: none;
+                min-width: 0;
+            }
+            .nav-brand-icon {
+                width: 2.35rem;
+                height: 2.35rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                filter: drop-shadow(0 6px 12px rgba(16, 27, 46, 0.1));
+                transition: transform 0.25s ease, filter 0.25s ease;
+            }
+            .nav-brand:hover .nav-brand-icon {
+                transform: translateY(-1px);
+                filter: drop-shadow(0 10px 18px rgba(16, 27, 46, 0.14));
+            }
+            .brand-glyph {
+                width: 100%;
+                height: 100%;
+                overflow: visible;
+            }
+            .brand-face-top {
+                fill: #101b2e;
+            }
+            .brand-face-left {
+                fill: #8b9bb0;
+            }
+            .brand-face-right {
+                fill: var(--accent);
+            }
+            .brand-spark {
+                fill: var(--accent-3);
+            }
+            .nav-brand-text {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 1.05rem;
+                font-weight: 700;
+                letter-spacing: -0.03em;
+            }
+            .nav-right {
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+            }
+            nav ul {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.35rem;
+            }
+            nav ul a {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.7rem 1rem;
+                border-radius: 999px;
+                color: var(--text-muted);
+                text-decoration: none;
+                font-size: 0.92rem;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+                transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+            }
+            nav ul a:hover,
+            nav ul a.active {
+                color: var(--text);
+                background: rgba(11, 114, 255, 0.1);
+                box-shadow: inset 0 0 0 1px rgba(11, 114, 255, 0.12);
+            }
+            nav ul a:hover { transform: translateY(-1px); }
+            .lang-selector {
+                position: relative;
+                flex-shrink: 0;
+            }
+            .lang-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.45rem;
+                min-width: 4.2rem;
+                justify-content: center;
+                padding: 0.66rem 0.9rem;
+                background: rgba(255, 255, 255, 0.82);
+                border: 1px solid var(--line);
+                border-radius: 999px;
+                color: var(--text-muted);
+                cursor: pointer;
+                transition: border-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+            }
+            .lang-btn:hover {
+                color: var(--text);
+                border-color: rgba(11, 114, 255, 0.28);
+                box-shadow: 0 10px 20px rgba(18, 35, 64, 0.08);
+                transform: translateY(-1px);
+            }
+            .lang-btn svg {
+                width: 0.8rem;
+                height: 0.8rem;
+                transition: transform 0.2s ease;
+            }
+            .lang-selector.open .lang-btn svg { transform: rotate(180deg); }
+            .lang-dropdown {
+                display: none;
+                position: absolute;
+                top: calc(100% + 0.7rem);
+                right: 0;
+                width: 11.5rem;
+                max-height: 20rem;
+                overflow-y: auto;
+                padding: 0.5rem;
+                border-radius: 1.25rem;
+                background: rgba(255, 255, 255, 0.88);
+                border: 1px solid rgba(255, 255, 255, 0.92);
+                backdrop-filter: blur(24px);
+                box-shadow: var(--shadow-card);
+            }
+            .lang-selector.open .lang-dropdown { display: block; }
+            .lang-option {
+                width: 100%;
+                border: none;
+                background: none;
+                color: var(--text-muted);
+                text-align: left;
+                padding: 0.65rem 0.85rem;
+                border-radius: 0.9rem;
+                cursor: pointer;
+                transition: background-color 0.2s ease, color 0.2s ease;
+            }
+            .lang-option:hover,
+            .lang-option.active {
+                background: rgba(11, 114, 255, 0.08);
+                color: var(--text);
+            }
+            .page-shell {
+                position: relative;
+                z-index: 1;
+            }
+            .hero {
+                width: var(--container);
+                margin: 0 auto;
+                padding: 4.5rem 0 2.5rem;
+            }
+            .hero-shell {
+                position: relative;
+                overflow: hidden;
+                padding: clamp(2rem, 5vw, 4rem);
+                border-radius: var(--radius-xl);
+                border: 1px solid rgba(255, 255, 255, 0.16);
+                background:
+                    radial-gradient(circle at top right, rgba(11, 114, 255, 0.28), transparent 34%),
+                    radial-gradient(circle at bottom left, rgba(34, 199, 162, 0.18), transparent 38%),
+                    linear-gradient(145deg, rgba(10, 18, 34, 0.98) 0%, rgba(16, 28, 52, 0.96) 52%, rgba(25, 43, 77, 0.92) 100%);
+                box-shadow: 0 34px 80px rgba(12, 28, 51, 0.18);
+            }
+            .hero-shell::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background:
+                    linear-gradient(120deg, transparent 15%, rgba(255, 255, 255, 0.08) 45%, transparent 70%),
+                    linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.03) 100%);
+                opacity: 0.7;
+                pointer-events: none;
+            }
+            .hero-grid {
+                position: relative;
+                z-index: 1;
+                display: grid;
+                grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
+                gap: 2rem;
+                align-items: end;
+            }
+            .hero h1 {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: clamp(3.8rem, 11vw, 7.2rem);
+                line-height: 0.9;
+                letter-spacing: -0.07em;
+                color: #fff6ea;
+                max-width: 8ch;
+            }
+            .hero-panel {
+                padding: 1.4rem;
+                border-radius: 1.75rem;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+                backdrop-filter: blur(18px);
+            }
+            .hero p {
+                color: rgba(242, 248, 255, 0.82);
+                font-size: clamp(1.08rem, 2vw, 1.35rem);
+                line-height: 1.75;
+                margin-bottom: 1.5rem;
+                max-width: 28ch;
+            }
+            .cta {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 3.5rem;
+                padding: 0.95rem 1.5rem;
+                border-radius: 999px;
+                text-decoration: none;
+                color: #0f1a2c;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+                background: #fff6ea;
+                border: 1px solid rgba(255, 255, 255, 0.24);
+                box-shadow: 0 18px 34px rgba(5, 13, 25, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+                transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+            }
+            .cta:hover {
+                transform: translateY(-2px);
+                background: #ffffff;
+                box-shadow: 0 24px 42px rgba(5, 13, 25, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.56);
+            }
+            .hero-orbit {
+                position: absolute;
+                border-radius: 999px;
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                pointer-events: none;
+            }
+            .hero-orbit-a {
+                width: min(36vw, 28rem);
+                height: min(36vw, 28rem);
+                right: -10%;
+                top: -28%;
+            }
+            .hero-orbit-b {
+                width: min(22vw, 18rem);
+                height: min(22vw, 18rem);
+                left: 38%;
+                bottom: -24%;
+                border-style: dashed;
+            }
+            .section {
+                width: var(--container);
+                margin: 0 auto;
+                padding: 1rem 0 2.5rem;
+            }
+            .section-header {
+                display: flex;
+                align-items: end;
+                justify-content: space-between;
+                gap: 1rem;
+                margin-bottom: 1.75rem;
+            }
+            .section-title {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: clamp(2.3rem, 6vw, 4rem);
+                line-height: 0.95;
+                letter-spacing: -0.05em;
+                color: var(--text);
+                max-width: 10ch;
+            }
+            .section-title::after {
+                content: "";
+                display: block;
+                width: 4.25rem;
+                height: 0.35rem;
+                margin-top: 1rem;
+                border-radius: 999px;
+                background: var(--accent-gradient);
+            }
+            .projects {
+                display: grid;
+                grid-template-columns: repeat(12, minmax(0, 1fr));
+                gap: 1.25rem;
+                counter-reset: project;
+            }
+            .project-card {
+                counter-increment: project;
+                grid-column: span 4;
+                position: relative;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                min-height: 100%;
+                padding: 1.8rem;
+                border-radius: var(--radius-lg);
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0.84) 0%, rgba(255, 255, 255, 0.7) 100%);
+                border: 1px solid rgba(255, 255, 255, 0.92);
+                box-shadow: var(--shadow-card);
+                backdrop-filter: blur(20px);
+                transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            }
+            .project-card::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background:
+                    linear-gradient(180deg, rgba(255, 255, 255, 0.46), transparent 36%),
+                    radial-gradient(circle at top right, rgba(11, 114, 255, 0.1), transparent 28%);
+                pointer-events: none;
+            }
+            .project-card::after {
+                content: counter(project, decimal-leading-zero);
+                position: absolute;
+                top: 1.35rem;
+                right: 1.4rem;
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 1rem;
+                color: rgba(20, 32, 51, 0.22);
+                letter-spacing: -0.04em;
+            }
+            .project-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 30px 68px rgba(18, 35, 64, 0.18);
+                border-color: rgba(11, 114, 255, 0.2);
+            }
+            .project-card:first-child {
+                grid-column: span 8;
+                background:
+                    radial-gradient(circle at top right, rgba(11, 114, 255, 0.14), transparent 30%),
+                    radial-gradient(circle at bottom left, rgba(34, 199, 162, 0.14), transparent 34%),
+                    linear-gradient(160deg, rgba(255, 255, 255, 0.9), rgba(245, 250, 255, 0.86));
+            }
+            .project-card:nth-child(3n + 2) {
+                background:
+                    radial-gradient(circle at top right, rgba(34, 199, 162, 0.12), transparent 24%),
+                    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(246, 255, 252, 0.76));
+            }
+            .project-card:nth-child(3n) {
+                background:
+                    radial-gradient(circle at top right, rgba(255, 138, 76, 0.12), transparent 24%),
+                    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 249, 245, 0.78));
+            }
+            .project-card h3 {
+                position: relative;
+                z-index: 1;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 0.55rem;
+                padding-right: 2.25rem;
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 1.45rem;
+                line-height: 1.12;
+                letter-spacing: -0.04em;
+                color: var(--text);
+            }
+            .project-card p {
+                position: relative;
+                z-index: 1;
+                flex: 1;
+                color: var(--text-muted);
+                font-size: 0.98rem;
+                line-height: 1.75;
+            }
+            .card-bottom {
+                position: relative;
+                z-index: 1;
+                margin-top: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .tech-tags {
+                position: relative;
+                z-index: 1;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.55rem;
+                margin-top: auto;
+            }
+            .tech-tag {
+                display: inline-flex;
+                align-items: center;
+                padding: 0.45rem 0.82rem;
+                border-radius: 999px;
+                background: rgba(11, 114, 255, 0.08);
+                border: 1px solid rgba(11, 114, 255, 0.12);
+                color: var(--text);
+                font-size: 0.75rem;
+                font-weight: 700;
+                letter-spacing: 0.01em;
+            }
+            .project-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                width: max-content;
+                padding: 0.78rem 1.18rem;
+                border-radius: 999px;
+                background: #101b2e;
+                border: 1px solid rgba(16, 27, 46, 0.16);
+                color: #f5fbff;
+                text-decoration: none;
+                font-size: 0.85rem;
+                font-weight: 700;
+                box-shadow: 0 14px 28px rgba(16, 27, 46, 0.16);
+                transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+            }
+            .project-link:hover {
+                transform: translateY(-2px);
+                background: var(--accent);
+                box-shadow: 0 18px 32px rgba(11, 114, 255, 0.24);
+            }
+            .project-link svg {
+                width: 0.9rem;
+                height: 0.9rem;
+                transition: transform 0.25s ease;
+            }
+            .project-link:hover svg { transform: translateX(0.2rem); }
+            .badge {
+                display: inline-flex;
+                align-items: center;
+                min-height: 1.6rem;
+                padding: 0.2rem 0.65rem;
+                border-radius: 999px;
+                border: 1px solid transparent;
+                font-size: 0.66rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                margin-left: 0;
+            }
+            .badge-public {
+                background: rgba(34, 199, 162, 0.14);
+                border-color: rgba(34, 199, 162, 0.2);
+                color: #0d7560;
+            }
+            .badge-private {
+                background: rgba(20, 32, 51, 0.06);
+                border-color: rgba(20, 32, 51, 0.08);
+                color: var(--text-soft);
+            }
+            .closing-grid {
+                width: var(--container);
+                margin: 0 auto;
+                display: grid;
+                grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+                gap: 1.25rem;
+                padding: 0 0 2rem;
+            }
+            .closing-card {
+                position: relative;
+                overflow: hidden;
+                padding: 2.15rem;
+                border-radius: 2.25rem;
+                border: 1px solid rgba(255, 255, 255, 0.88);
+                box-shadow: var(--shadow-card);
+            }
+            .closing-card::before {
+                content: "";
+                position: absolute;
+                inset: 0 auto auto 0;
+                width: 100%;
+                height: 0.35rem;
+                background: var(--accent-gradient);
+                opacity: 0.85;
+            }
+            .about-card {
+                background: rgba(255, 255, 255, 0.74);
+                backdrop-filter: blur(20px);
+            }
+            .about-card p {
+                max-width: 54ch;
+                margin-top: 1.1rem;
+                color: var(--text-muted);
+                font-size: 1.04rem;
+                line-height: 1.85;
+            }
+            .contact-card {
+                background:
+                    radial-gradient(circle at top right, rgba(34, 199, 162, 0.18), transparent 34%),
+                    linear-gradient(165deg, rgba(11, 18, 34, 0.98) 0%, rgba(19, 37, 68, 0.96) 100%);
+                color: #eef5ff;
+            }
+            .contact-card .section-title {
+                color: #fff6ea;
+            }
+            .contact-card p {
+                margin-top: 1.25rem;
+                color: rgba(238, 245, 255, 0.84);
+            }
+            .contact-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.55rem;
+            }
+            .contact-links a {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 3rem;
+                padding: 0.72rem 1rem;
+                border-radius: 999px;
+                text-decoration: none;
+                color: #fff6ea;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                font-weight: 700;
+                transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+            }
+            .contact-links a:hover {
+                transform: translateY(-2px);
+                background: rgba(34, 199, 162, 0.18);
+                border-color: rgba(34, 199, 162, 0.28);
+            }
+            .contact-separator {
+                display: none;
+            }
+            footer {
+                width: var(--container);
+                margin: 0 auto 2rem;
+                padding-top: 1rem;
+                text-align: center;
+                color: var(--text-soft);
+                font-size: 0.92rem;
+            }
+            footer p {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.85rem 1.1rem;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.56);
+                border: 1px solid rgba(255, 255, 255, 0.88);
+                backdrop-filter: blur(18px);
+            }
+            @media (max-width: 1024px) {
+                .hero-grid {
+                    grid-template-columns: 1fr;
+                }
+                .hero p {
+                    max-width: 40ch;
+                }
+                .projects {
+                    grid-template-columns: repeat(6, minmax(0, 1fr));
+                }
+                .project-card {
+                    grid-column: span 3;
+                }
+                .project-card:first-child {
+                    grid-column: span 6;
+                }
+                .closing-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+            @media (max-width: 760px) {
+                header {
+                    top: 10px;
+                    padding-top: 0.6rem;
+                }
+                nav {
+                    border-radius: 2rem;
+                    padding: 0.85rem;
+                    flex-wrap: wrap;
+                }
+                .nav-right {
+                    display: contents;
+                }
+                .lang-selector {
+                    order: 2;
+                    margin-left: auto;
+                }
+                nav ul {
+                    order: 3;
+                    width: 100%;
+                    justify-content: space-between;
+                }
+                nav ul li {
+                    flex: 1;
+                }
+                nav ul a {
+                    width: 100%;
+                    padding: 0.72rem 0.5rem;
+                    font-size: 0.84rem;
+                }
+                .hero {
+                    padding: 3rem 0 1.5rem;
+                }
+                .hero-shell {
+                    border-radius: 2rem;
+                    padding: 1.5rem;
+                }
+                .hero-panel {
+                    padding: 1.1rem;
+                }
+                .projects {
+                    grid-template-columns: 1fr;
+                }
+                .project-card,
+                .project-card:first-child {
+                    grid-column: auto;
+                }
+                .project-card,
+                .closing-card {
+                    padding: 1.45rem;
+                }
+                .project-card::after {
+                    top: 1.15rem;
+                    right: 1.15rem;
+                }
+            }
+            @media (max-width: 480px) {
+                body::before {
+                    background-size: 48px 48px;
+                }
+                .nav-brand-text {
+                    display: none;
+                }
+                .section-title::after {
+                    margin-top: 0.8rem;
+                }
+                .hero h1 {
+                    font-size: clamp(3rem, 20vw, 4.5rem);
+                }
+                .hero p,
+                .about-card p {
+                    font-size: 1rem;
+                }
+                .contact-links a {
+                    width: 100%;
+                }
+                footer {
+                    margin-bottom: 1.25rem;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                html {
+                    scroll-behavior: auto;
+                }
+                *,
+                *::before,
+                *::after {
+                    animation: none !important;
+                    transition: none !important;
+                }
+            }
+        </style>
 </head>
-<body>
-    <header>
-        <nav>
-            <a href="#home" class="nav-brand">
-                <div class="nav-brand-icon">W</div>
-                <span class="nav-brand-text">Wess Labs</span>
-            </a>
-            <div class="nav-right">
-                <ul>
-                    <li><a href="#projects" data-i18n="nav.projects">Projetos</a></li>
-                    <li><a href="#about" data-i18n="nav.about">Sobre</a></li>
-                    <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
-                </ul>
-                <div class="lang-selector" id="langSelector">
-                    <button class="lang-btn" id="langBtn">
-                        <span id="langLabel">PT</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                    </button>
-                    <div class="lang-dropdown" id="langDropdown"></div>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <section id="home" class="hero">
-        <h1>Wess Labs</h1>
-        <p data-i18n="hero.subtitle">Experimentos pessoais em code, IA, música, Bitcoin e cubos. Onde ideias viram protótipos.</p>
-        <a href="#projects" class="cta" data-i18n="hero.cta">Explorar Projetos</a>
-    </section>
-
-    <section id="projects" class="section">
-        <h2 class="section-title" data-i18n="section.projects">Projetos</h2>
-        <div class="projects">
-
-            <div class="project-card">
-                <h3>Satsboard <span class="badge badge-public" data-i18n="badge.public">Publico</span></h3>
-                <p data-i18n="project.satsboard">Dashboard de Bitcoin com preço em tempo real, métricas de rede, dados de mempool, análise de sentimento, MVRV on-chain e um indicador composto de "BTC Health Score".</p>
-                <div class="card-bottom">
-                    <a href="https://satsboard.wesslabs.com/" target="_blank" rel="noopener" class="project-link"><span data-i18n="link.open">Aceder app</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Next.js</span>
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">TypeScript</span>
-                        <span class="tech-tag">Tailwind CSS</span>
+    <body>
+        <header>
+            <nav>
+                <a href="#home" class="nav-brand">
+                    <div class="nav-brand-icon" aria-hidden="true">
+                        <svg class="brand-glyph" viewBox="0 0 40 40" fill="none">
+                            <path class="brand-face-top" d="M20 8.5 30 14.2 20 19.9 10 14.2Z"/>
+                            <path class="brand-face-left" d="M10 16.1 18.8 21.2v10.2L10 26.3Z"/>
+                            <path class="brand-face-right" d="M30 16.1 21.2 21.2v10.2l8.8-5.1Z"/>
+                            <circle class="brand-spark" cx="31.6" cy="12.6" r="2.25"/>
+                        </svg>
+                    </div>
+                    <span class="nav-brand-text">Wess Labs</span>
+                </a>
+                <div class="nav-right">
+                    <ul>
+                        <li><a href="#projects" data-i18n="nav.projects">Projetos</a></li>
+                        <li><a href="#about" data-i18n="nav.about">Sobre</a></li>
+                        <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
+                    </ul>
+                    <div class="lang-selector" id="langSelector">
+                        <button class="lang-btn" id="langBtn" aria-label="Select language">
+                            <span id="langLabel">PT</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <div class="lang-dropdown" id="langDropdown"></div>
                     </div>
                 </div>
-            </div>
+            </nav>
+        </header>
 
-            <div class="project-card">
-                <h3>LyraVeil <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
-                <p data-i18n="project.lyraveil">Ferramenta de análise musical com IA que oferece traduções linha-a-linha, análise de vocabulário, interpretação narrativa e síntese de voz (TTS). Suporta LLM local via Ollama e provedores cloud (OpenAI, Anthropic) via BYOK.</p>
-                <div class="tech-tags">
-                    <span class="tech-tag">Python</span>
-                    <span class="tech-tag">FastAPI</span>
-                    <span class="tech-tag">Ollama</span>
-                    <span class="tech-tag">OpenAI</span>
-                    <span class="tech-tag">Anthropic</span>
-                    <span class="tech-tag">Spotify API</span>
+        <main class="page-shell">
+            <section id="home" class="hero">
+                <div class="hero-shell">
+                    <div class="hero-orbit hero-orbit-a" aria-hidden="true"></div>
+                    <div class="hero-orbit hero-orbit-b" aria-hidden="true"></div>
+                    <div class="hero-grid">
+                        <div class="hero-title">
+                            <h1>Wess Labs</h1>
+                        </div>
+                        <div class="hero-panel">
+                            <p data-i18n="hero.subtitle">Experimentos pessoais em code, IA, música, Bitcoin e cubos. Onde ideias viram protótipos.</p>
+                            <a href="#projects" class="cta" data-i18n="hero.cta">Explorar Projetos</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="project-card">
-                <h3>WhisperSubs <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
-                <p data-i18n="project.whispersubs">Gerador de legendas (.srt) e transcrições (.txt) a partir de vídeos do YouTube usando Whisper da OpenAI. Instalável como PWA em iOS, macOS e Android.</p>
-                <div class="tech-tags">
-                    <span class="tech-tag">Python</span>
-                    <span class="tech-tag">Flask</span>
-                    <span class="tech-tag">Whisper</span>
-                    <span class="tech-tag">PWA</span>
+            <section id="projects" class="section section-projects">
+                <div class="section-header">
+                    <h2 class="section-title" data-i18n="section.projects">Projetos</h2>
                 </div>
-            </div>
+                <div class="projects">
 
-            <div class="project-card">
-                <h3>NexTranslate <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
-                <p data-i18n="project.nextranslate">Aplicação de tradução com IA local via Ollama. Tradução privada e offline, sem enviar dados para serviços externos.</p>
-                <div class="tech-tags">
-                    <span class="tech-tag">Next.js</span>
-                    <span class="tech-tag">React</span>
-                    <span class="tech-tag">TypeScript</span>
-                    <span class="tech-tag">Ollama</span>
+                    <div class="project-card">
+                        <h3>Satsboard <span class="badge badge-public" data-i18n="badge.public">Publico</span></h3>
+                        <p data-i18n="project.satsboard">Dashboard de Bitcoin com preço em tempo real, métricas de rede, dados de mempool, análise de sentimento, MVRV on-chain e um indicador composto de "BTC Health Score".</p>
+                        <div class="card-bottom">
+                            <a href="https://satsboard.wesslabs.com/" target="_blank" rel="noopener" class="project-link"><span data-i18n="link.open">Aceder app</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                            <div class="tech-tags">
+                                <span class="tech-tag">Next.js</span>
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">TypeScript</span>
+                                <span class="tech-tag">Tailwind CSS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>LyraVeil <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
+                        <p data-i18n="project.lyraveil">Ferramenta de análise musical com IA que oferece traduções linha-a-linha, análise de vocabulário, interpretação narrativa e síntese de voz (TTS). Suporta LLM local via Ollama e provedores cloud (OpenAI, Anthropic) via BYOK.</p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">FastAPI</span>
+                            <span class="tech-tag">Ollama</span>
+                            <span class="tech-tag">OpenAI</span>
+                            <span class="tech-tag">Anthropic</span>
+                            <span class="tech-tag">Spotify API</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>WhisperSubs <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
+                        <p data-i18n="project.whispersubs">Gerador de legendas (.srt) e transcrições (.txt) a partir de vídeos do YouTube usando Whisper da OpenAI. Instalável como PWA em iOS, macOS e Android.</p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">Whisper</span>
+                            <span class="tech-tag">PWA</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>NexTranslate <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
+                        <p data-i18n="project.nextranslate">Aplicação de tradução com IA local via Ollama. Tradução privada e offline, sem enviar dados para serviços externos.</p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Next.js</span>
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">Ollama</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>GymProgress <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
+                        <p data-i18n="project.gymprogress">App de tracking de treinos de musculação com registo de exercícios, progressão de carga, histórico de sessões e gráficos de performance por exercício.</p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">SQLite</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>SpeedCubeTimer <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
+                        <p data-i18n="project.speedcubetimer">Timer para speedcubing com geração de scrambles, tracking de solves, estatísticas (ao5/ao12/ao50/ao100) e integração com timers físicos Stackmat e GAN/QiYi via Bluetooth.</p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">FastAPI</span>
+                            <span class="tech-tag">Web Bluetooth</span>
+                            <span class="tech-tag">PWA</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>SpeedCubeLab <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
+                        <p data-i18n="project.speedcubelab">Biblioteca interativa de algoritmos de speedcubing com todos os 57 casos OLL e 21 PLL, visualização 3D, imagens de padrões e animação passo-a-passo.</p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">FastAPI</span>
+                            <span class="tech-tag">cubing.js</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                    </div>
+
                 </div>
+            </section>
+
+            <div class="closing-grid">
+                <section id="about" class="closing-card about-card">
+                    <h2 class="section-title" data-i18n="section.about">O que rola aqui?</h2>
+                    <p data-i18n="about.text">Wesley Santana (Porto, PT). Dev full-stack com foco em Salesforce, .NET e IA, orientado a produto e pragmático na escolha da stack. Este lab reflete essa abordagem: trabalhar com liberdade e usar as melhores tecnologias disponíveis para cada desafio, sempre com o objetivo de construir produtos sólidos, úteis e bem pensados.</p>
+                </section>
+
+                <section id="contact" class="closing-card contact-card">
+                    <h2 class="section-title" data-i18n="section.contact">Vamos trocar ideias?</h2>
+                    <p class="contact-links"><a href="mailto:hello@wesslabs.com">hello@wesslabs.com</a><span class="contact-separator" aria-hidden="true">|</span><a href="https://www.linkedin.com/in/wesleyfsantana/">LinkedIn</a><span class="contact-separator" aria-hidden="true">|</span><a href="https://github.com/sammwess">GitHub</a></p>
+                </section>
             </div>
+        </main>
 
-            <div class="project-card">
-                <h3>GymProgress <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
-                <p data-i18n="project.gymprogress">App de tracking de treinos de musculação com registo de exercícios, progressão de carga, histórico de sessões e gráficos de performance por exercício.</p>
-                <div class="tech-tags">
-                    <span class="tech-tag">Python</span>
-                    <span class="tech-tag">Flask</span>
-                    <span class="tech-tag">SQLite</span>
-                    <span class="tech-tag">JavaScript</span>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <h3>SpeedCubeTimer <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
-                <p data-i18n="project.speedcubetimer">Timer para speedcubing com geração de scrambles, tracking de solves, estatísticas (ao5/ao12/ao50/ao100) e integração com timers físicos Stackmat e GAN/QiYi via Bluetooth.</p>
-                <div class="tech-tags">
-                    <span class="tech-tag">Python</span>
-                    <span class="tech-tag">FastAPI</span>
-                    <span class="tech-tag">Web Bluetooth</span>
-                    <span class="tech-tag">PWA</span>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <h3>SpeedCubeLab <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
-                <p data-i18n="project.speedcubelab">Biblioteca interativa de algoritmos de speedcubing com todos os 57 casos OLL e 21 PLL, visualização 3D, imagens de padrões e animação passo-a-passo.</p>
-                <div class="tech-tags">
-                    <span class="tech-tag">Python</span>
-                    <span class="tech-tag">FastAPI</span>
-                    <span class="tech-tag">cubing.js</span>
-                    <span class="tech-tag">JavaScript</span>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="about" class="section" style="text-align:center; max-width:800px;">
-        <h2 class="section-title" data-i18n="section.about">O que rola aqui?</h2>
-        <p data-i18n="about.text">Wesley Santana (Porto, PT). Dev full-stack com foco em Salesforce, Next.js e IA. Este lab é para testar ideias malucas: de análise musical a dashboards de Bitcoin. Colaborações em breve!</p>
-    </section>
-
-    <section id="contact" class="section" style="text-align:center;">
-        <h2 class="section-title" data-i18n="section.contact">Vamos trocar ideias?</h2>
-        <p><a href="mailto:hello@wesslabs.com" style="color:var(--accent); font-size:1.2rem;">hello@wesslabs.com</a> | <a href="https://www.linkedin.com/in/wesleyfsantana/" style="color:var(--accent);">LinkedIn</a> | <a href="https://github.com/sammwess" style="color:var(--accent);">GitHub</a></p>
-    </section>
-
-    <footer>
-        <p data-i18n="footer">&copy; 2026 Wess Labs. Construído com curiosidade, AI e linhas de código.</p>
-    </footer>
+        <footer>
+            <p data-i18n="footer">&copy; 2026 Wess Labs. Construído com curiosidade, AI e linhas de código.</p>
+        </footer>
 
     <script>
     const i18n = {
@@ -299,7 +914,7 @@
             "project.speedcubetimer": "Timer para speedcubing com geração de scrambles, tracking de solves, estatísticas (ao5/ao12/ao50/ao100) e integração com timers físicos Stackmat e GAN/QiYi via Bluetooth.",
             "project.speedcubelab": "Biblioteca interativa de algoritmos de speedcubing com todos os 57 casos OLL e 21 PLL, visualização 3D, imagens de padrões e animação passo-a-passo.",
             "section.about": "O que rola aqui?",
-            "about.text": "Wesley Santana (Porto, PT). Dev full-stack com foco em Salesforce, Next.js e IA. Este lab é para testar ideias malucas: de análise musical a dashboards de Bitcoin. Colaborações em breve!",
+            "about.text": "Wesley Santana (Porto, PT). Dev full-stack com foco em Salesforce, .NET e IA, orientado a produto e pragmático na escolha da stack. Este lab reflete essa abordagem: trabalhar com liberdade e usar as melhores tecnologias disponíveis para cada desafio, sempre com o objetivo de construir produtos sólidos, úteis e bem pensados.",
             "section.contact": "Vamos trocar ideias?",
             "footer": "© 2026 Wess Labs. Construído com curiosidade, AI e linhas de código."
         },
@@ -321,7 +936,7 @@
             "project.speedcubetimer": "Speedcubing timer with scramble generation, solve tracking, statistics (ao5/ao12/ao50/ao100) and hardware timer integration with Stackmat and GAN/QiYi via Bluetooth.",
             "project.speedcubelab": "Interactive speedcubing algorithm library with all 57 OLL and 21 PLL cases, 3D visualization, pattern images and step-by-step animation.",
             "section.about": "What's this about?",
-            "about.text": "Wesley Santana (Porto, PT). Full-stack developer focused on Salesforce, Next.js and AI. This lab is for testing bold ideas: from music analysis to Bitcoin dashboards. Collaborations coming soon!",
+            "about.text": "Wesley Santana (Porto, PT). Full-stack developer focused on Salesforce, .NET and AI, product-minded and pragmatic about choosing the stack. This lab reflects that approach: working freely and using the best technologies available for each challenge, always with the goal of building solid, useful and well-crafted products.",
             "section.contact": "Let's share ideas?",
             "footer": "© 2026 Wess Labs. Built with curiosity, AI and lines of code."
         },
@@ -343,7 +958,7 @@
             "project.speedcubetimer": "Cronómetro para speedcubing con generación de scrambles, seguimiento de solves, estadísticas (ao5/ao12/ao50/ao100) e integración con timers físicos Stackmat y GAN/QiYi vía Bluetooth.",
             "project.speedcubelab": "Biblioteca interactiva de algoritmos de speedcubing con los 57 casos OLL y 21 PLL, visualización 3D, imágenes de patrones y animación paso a paso.",
             "section.about": "¿Qué hay aquí?",
-            "about.text": "Wesley Santana (Porto, PT). Dev full-stack con enfoque en Salesforce, Next.js e IA. Este lab es para probar ideas atrevidas: del análisis musical a dashboards de Bitcoin. ¡Colaboraciones pronto!",
+            "about.text": "Wesley Santana (Porto, PT). Dev full-stack con foco en Salesforce, .NET e IA, orientado al producto y pragmático al elegir la stack. Este lab refleja ese enfoque: trabajar con libertad y usar las mejores tecnologías disponibles para cada reto, siempre con el objetivo de construir productos sólidos, útiles y bien pensados.",
             "section.contact": "¿Compartimos ideas?",
             "footer": "© 2026 Wess Labs. Construido con curiosidad, IA y líneas de código."
         },
@@ -365,7 +980,7 @@
             "project.speedcubetimer": "Chronomètre de speedcubing avec génération de mélanges, suivi de résolutions, statistiques (ao5/ao12/ao50/ao100) et intégration de timers physiques Stackmat et GAN/QiYi via Bluetooth.",
             "project.speedcubelab": "Bibliothèque interactive d'algorithmes de speedcubing avec les 57 cas OLL et 21 PLL, visualisation 3D, images de motifs et animation étape par étape.",
             "section.about": "C'est quoi ici ?",
-            "about.text": "Wesley Santana (Porto, PT). Développeur full-stack spécialisé en Salesforce, Next.js et IA. Ce lab sert à tester des idées audacieuses : de l'analyse musicale aux dashboards Bitcoin. Collaborations bientôt !",
+            "about.text": "Wesley Santana (Porto, PT). Développeur full-stack axé sur Salesforce, .NET et l'IA, orienté produit et pragmatique dans le choix de la stack. Ce lab reflète cette approche : travailler librement et utiliser les meilleures technologies disponibles pour chaque défi, avec pour objectif de construire des produits solides, utiles et bien conçus.",
             "section.contact": "On échange des idées ?",
             "footer": "© 2026 Wess Labs. Construit avec curiosité, IA et lignes de code."
         },
@@ -387,7 +1002,7 @@
             "project.speedcubetimer": "Speedcubing-Timer mit Scramble-Generierung, Solve-Tracking, Statistiken (ao5/ao12/ao50/ao100) und Hardware-Timer-Integration mit Stackmat und GAN/QiYi via Bluetooth.",
             "project.speedcubelab": "Interaktive Speedcubing-Algorithmus-Bibliothek mit allen 57 OLL- und 21 PLL-Fällen, 3D-Visualisierung, Musterbildern und Schritt-für-Schritt-Animation.",
             "section.about": "Was gibt's hier?",
-            "about.text": "Wesley Santana (Porto, PT). Full-Stack-Entwickler mit Fokus auf Salesforce, Next.js und KI. Dieses Lab ist zum Testen mutiger Ideen: von Musikanalyse bis Bitcoin-Dashboards. Zusammenarbeit kommt bald!",
+            "about.text": "Wesley Santana (Porto, PT). Full-Stack-Entwickler mit Fokus auf Salesforce, .NET und KI, produktorientiert und pragmatisch bei der Wahl des Stacks. Dieses Lab spiegelt diesen Ansatz wider: frei arbeiten und für jede Herausforderung die besten verfügbaren Technologien nutzen, immer mit dem Ziel, solide, nützliche und durchdachte Produkte zu bauen.",
             "section.contact": "Ideen austauschen?",
             "footer": "© 2026 Wess Labs. Gebaut mit Neugier, KI und Code."
         },
@@ -409,7 +1024,7 @@
             "project.speedcubetimer": "Timer per speedcubing con generazione di scramble, tracking dei solve, statistiche (ao5/ao12/ao50/ao100) e integrazione con timer fisici Stackmat e GAN/QiYi via Bluetooth.",
             "project.speedcubelab": "Libreria interattiva di algoritmi di speedcubing con tutti i 57 casi OLL e 21 PLL, visualizzazione 3D, immagini dei pattern e animazione passo-passo.",
             "section.about": "Cosa c'è qui?",
-            "about.text": "Wesley Santana (Porto, PT). Sviluppatore full-stack con focus su Salesforce, Next.js e IA. Questo lab è per testare idee audaci: dall'analisi musicale alle dashboard Bitcoin. Collaborazioni in arrivo!",
+            "about.text": "Wesley Santana (Porto, PT). Sviluppatore full-stack con focus su Salesforce, .NET e IA, orientato al prodotto e pragmatico nella scelta della stack. Questo lab riflette questo approccio: lavorare con libertà e usare le migliori tecnologie disponibili per ogni sfida, sempre con l'obiettivo di costruire prodotti solidi, utili e ben progettati.",
             "section.contact": "Scambiamo idee?",
             "footer": "© 2026 Wess Labs. Costruito con curiosità, IA e righe di codice."
         },
@@ -431,7 +1046,7 @@
             "project.speedcubetimer": "Speedcubing-timer met scramble-generatie, solve-tracking, statistieken (ao5/ao12/ao50/ao100) en hardware-timer-integratie met Stackmat en GAN/QiYi via Bluetooth.",
             "project.speedcubelab": "Interactieve speedcubing-algoritmebibliotheek met alle 57 OLL- en 21 PLL-gevallen, 3D-visualisatie, patroonafbeeldingen en stap-voor-stap animatie.",
             "section.about": "Wat is dit?",
-            "about.text": "Wesley Santana (Porto, PT). Full-stack developer met focus op Salesforce, Next.js en AI. Dit lab is om gedurfde ideeën te testen: van muziekanalyse tot Bitcoin-dashboards. Samenwerkingen binnenkort!",
+            "about.text": "Wesley Santana (Porto, PT). Full-stack developer met focus op Salesforce, .NET en AI, productgericht en pragmatisch in de keuze van de stack. Dit lab weerspiegelt die aanpak: vrij werken en voor elke uitdaging de best beschikbare technologieën inzetten, altijd met het doel om solide, nuttige en doordachte producten te bouwen.",
             "section.contact": "Ideeën uitwisselen?",
             "footer": "© 2026 Wess Labs. Gebouwd met nieuwsgierigheid, AI en regels code."
         },
@@ -453,7 +1068,7 @@
             "project.speedcubetimer": "Timer do speedcubingu z generowaniem scrambli, śledzeniem solve'ów, statystykami (ao5/ao12/ao50/ao100) i integracją z timerami fizycznymi Stackmat i GAN/QiYi przez Bluetooth.",
             "project.speedcubelab": "Interaktywna biblioteka algorytmów speedcubingowych ze wszystkimi 57 przypadkami OLL i 21 PLL, wizualizacją 3D, obrazami wzorów i animacją krok po kroku.",
             "section.about": "O co tu chodzi?",
-            "about.text": "Wesley Santana (Porto, PT). Developer full-stack z fokusem na Salesforce, Next.js i AI. To laboratorium do testowania odważnych pomysłów: od analizy muzyki po dashboardy Bitcoina. Współpraca wkrótce!",
+            "about.text": "Wesley Santana (Porto, PT). Programista full-stack skupiony na Salesforce, .NET i AI, nastawiony na produkt i pragmatyczny w doborze stacku. To laboratorium odzwierciedla to podejście: pracować swobodnie i wykorzystywać najlepsze dostępne technologie do każdego wyzwania, zawsze z myślą o budowaniu solidnych, użytecznych i dobrze przemyślanych produktów.",
             "section.contact": "Wymieńmy się pomysłami?",
             "footer": "© 2026 Wess Labs. Zbudowane z ciekawości, AI i linii kodu."
         },
@@ -475,7 +1090,7 @@
             "project.speedcubetimer": "Speedcubing-timer med scramble-generering, solve-tracking, statistik (ao5/ao12/ao50/ao100) och hårdvarutimer-integration med Stackmat och GAN/QiYi via Bluetooth.",
             "project.speedcubelab": "Interaktivt speedcubing-algoritmbibliotek med alla 57 OLL- och 21 PLL-fall, 3D-visualisering, mönsterbilder och steg-för-steg-animation.",
             "section.about": "Vad handlar det om?",
-            "about.text": "Wesley Santana (Porto, PT). Full-stack-utvecklare med fokus på Salesforce, Next.js och AI. Det här labbet är för att testa djärva idéer: från musikanalys till Bitcoin-dashboards. Samarbeten kommer snart!",
+            "about.text": "Wesley Santana (Porto, PT). Fullstackutvecklare med fokus på Salesforce, .NET och AI, produktorienterad och pragmatisk i val av stack. Det här labbet speglar det arbetssättet: att arbeta fritt och använda de bästa tillgängliga teknikerna för varje utmaning, alltid med målet att bygga solida, användbara och genomtänkta produkter.",
             "section.contact": "Utbyta idéer?",
             "footer": "© 2026 Wess Labs. Byggt med nyfikenhet, AI och kodrader."
         },
@@ -497,7 +1112,7 @@
             "project.speedcubetimer": "Speedcubing-timer med scramble-generering, solve-tracking, statistikker (ao5/ao12/ao50/ao100) og hardware-timer-integration med Stackmat og GAN/QiYi via Bluetooth.",
             "project.speedcubelab": "Interaktivt speedcubing-algoritmebibliotek med alle 57 OLL- og 21 PLL-tilfælde, 3D-visualisering, mønsterbilleder og trin-for-trin animation.",
             "section.about": "Hvad handler det om?",
-            "about.text": "Wesley Santana (Porto, PT). Full-stack-udvikler med fokus på Salesforce, Next.js og AI. Dette lab er til at teste dristige idéer: fra musikanalyse til Bitcoin-dashboards. Samarbejder kommer snart!",
+            "about.text": "Wesley Santana (Porto, PT). Full-stack-udvikler med fokus på Salesforce, .NET og AI, produktorienteret og pragmatisk i valget af stack. Dette lab afspejler den tilgang: at arbejde frit og bruge de bedste tilgængelige teknologier til hver udfordring, altid med målet om at bygge solide, nyttige og gennemtænkte produkter.",
             "section.contact": "Udveksle idéer?",
             "footer": "© 2026 Wess Labs. Bygget med nysgerrighed, AI og kodelinjer."
         },
@@ -519,7 +1134,7 @@
             "project.speedcubetimer": "Speedcubing-timer med scramble-generering, solve-tracking, statistikk (ao5/ao12/ao50/ao100) og hardware-timer-integrasjon med Stackmat og GAN/QiYi via Bluetooth.",
             "project.speedcubelab": "Interaktivt speedcubing-algoritmebibliotek med alle 57 OLL- og 21 PLL-tilfeller, 3D-visualisering, mønsterbilder og steg-for-steg-animasjon.",
             "section.about": "Hva handler dette om?",
-            "about.text": "Wesley Santana (Porto, PT). Full-stack-utvikler med fokus på Salesforce, Next.js og AI. Dette labbet er for å teste dristige idéer: fra musikkanalyse til Bitcoin-dashboards. Samarbeid kommer snart!",
+            "about.text": "Wesley Santana (Porto, PT). Full-stack-utvikler med fokus på Salesforce, .NET og AI, produktorientert og pragmatisk i valg av stack. Dette labbet gjenspeiler denne tilnærmingen: å arbeide fritt og bruke de beste tilgjengelige teknologiene for hver utfordring, alltid med mål om å bygge solide, nyttige og gjennomtenkte produkter.",
             "section.contact": "Utveksle idéer?",
             "footer": "© 2026 Wess Labs. Bygget med nysgjerrighet, AI og kodelinjer."
         },
@@ -541,7 +1156,7 @@
             "project.speedcubetimer": "Speedcubing-ajastin scramble-generoinnilla, ratkaisuseurannalla, tilastoilla (ao5/ao12/ao50/ao100) ja laitteistoajastinintegraatiolla Stackmatin ja GAN/QiYin kanssa Bluetoothin kautta.",
             "project.speedcubelab": "Interaktiivinen speedcubing-algoritmikirjasto kaikilla 57 OLL- ja 21 PLL-tapauksella, 3D-visualisoinnilla, kuviokuvilla ja askel askeleelta -animaatiolla.",
             "section.about": "Mistä on kyse?",
-            "about.text": "Wesley Santana (Porto, PT). Full-stack-kehittäjä keskittyen Salesforceen, Next.js:ään ja tekoälyyn. Tämä laboratorio on rohkeiden ideoiden testaamiseen: musiikkianalyysistä Bitcoin-kojelautaan. Yhteistyöt tulossa pian!",
+            "about.text": "Wesley Santana (Porto, PT). Full-stack-kehittäjä, jonka fokus on Salesforce, .NET ja tekoäly, tuotemielinen ja pragmaattinen teknologiapinon valinnassa. Tämä laboratorio heijastaa sitä lähestymistapaa: työskennellä vapaasti ja käyttää kunkin haasteen kannalta parhaita saatavilla olevia teknologioita, aina tavoitteena rakentaa kestäviä, hyödyllisiä ja harkittuja tuotteita.",
             "section.contact": "Vaihdetaanko ideoita?",
             "footer": "© 2026 Wess Labs. Rakennettu uteliaisuudella, tekoälyllä ja koodiriveillä."
         }
@@ -607,16 +1222,49 @@
         document.addEventListener("click", () => {
             document.getElementById("langSelector").classList.remove("open");
         });
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                document.getElementById("langSelector").classList.remove("open");
+            }
+        });
 
         setLang(detectLang());
     })();
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (!target) return;
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
         });
     });
+
+    const navLinks = Array.from(document.querySelectorAll('nav ul a[href^="#"]'));
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+
+    const navObserver = new IntersectionObserver((entries) => {
+        const activeEntry = entries
+            .filter(entry => entry.isIntersecting && entry.target.id !== 'home')
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (!activeEntry) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            return;
+        }
+
+        const activeHash = `#${activeEntry.target.id}`;
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === activeHash);
+        });
+    }, {
+        rootMargin: '-28% 0px -48% 0px',
+        threshold: [0.2, 0.45, 0.7]
+    });
+
+    sections.forEach(section => navObserver.observe(section));
     </script>
 </body>
 </html>

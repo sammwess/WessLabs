@@ -1,6 +1,6 @@
 # Wess Labs
 
-Landing page pessoal — experimentos em code, IA, música, Bitcoin e cubos.
+Portfólio e landing page pessoal de Wesley Santana — dev full-stack com foco em Salesforce, .NET e IA, com abordagem orientada a produto e liberdade para escolher a melhor stack para cada projeto.
 
 🌐 [wesslabs.com](https://wesslabs.com)
 
