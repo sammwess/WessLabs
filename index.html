@@ -30,6 +30,7 @@
             padding: 2rem 5%;
             border-bottom: 1px solid #333;
             position: sticky; top: 0; backdrop-filter: blur(20px); z-index: 10;
+            background: rgba(10, 10, 10, 0.8);
         }
         nav ul {
             list-style: none; display: flex; gap: 2rem; justify-content: center;
@@ -37,40 +38,60 @@
         nav a { color: var(--text-dim); text-decoration: none; font-weight: 500; transition: all 0.3s; }
         nav a:hover, nav a.active { color: var(--accent); }
         .hero {
-            text-align: center; padding: 5rem 5%; max-width: 800px; margin: 0 auto;
+            text-align: center; padding: 5rem 5% 3rem; max-width: 800px; margin: 0 auto;
         }
         .hero h1 {
             font-size: clamp(2.5rem, 8vw, 5rem); margin-bottom: 1rem;
             background: linear-gradient(135deg, var(--accent), #00cc66); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .hero p { font-size: 1.3rem; color: var(--text-dim); margin-bottom: 2rem; }
-        .cta { 
-            background: var(--accent); color: var(--bg); padding: 1rem 2rem; border: none; 
-            font-size: 1.1rem; font-weight: 600; border-radius: 50px; cursor: pointer; 
+        .cta {
+            background: var(--accent); color: var(--bg); padding: 1rem 2rem; border: none;
+            font-size: 1.1rem; font-weight: 600; border-radius: 50px; cursor: pointer;
             transition: transform 0.3s; text-decoration: none; display: inline-block;
         }
         .cta:hover { transform: scale(1.05); }
         .section { padding: 5rem 5%; max-width: 1200px; margin: 0 auto; }
-        .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+        .section-title { text-align: center; margin-bottom: 3rem; font-size: 2.5rem; }
+        .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; }
         .project-card {
             background: var(--card-bg); border-radius: 20px; padding: 2rem; transition: all 0.4s;
             border: 1px solid #333; position: relative; overflow: hidden;
+            display: flex; flex-direction: column;
         }
         .project-card:hover {
-            transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,255,136,0.2);
+            transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,255,136,0.12);
             border-color: var(--accent);
         }
-        .project-card h3 { color: var(--accent); margin-bottom: 1rem; }
-        .project-card p { color: var(--text-dim); margin-bottom: 1.5rem; }
-        .project-link { color: var(--accent); text-decoration: none; font-weight: 500; }
-        .tech-tags { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
-        .tech-tag { background: #333; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; color: var(--text-dim); }
-        footer { text-align: center; padding: 2rem; background: #000; color: var(--text-dim); }
-        @media (max-width: 768px) {
-            nav ul { flex-direction: column; gap: 1rem; }
-            .hero { padding: 3rem 5%; }
+        .project-card h3 { color: var(--accent); margin-bottom: 0.75rem; font-size: 1.25rem; }
+        .project-card p { color: var(--text-dim); margin-bottom: 1.25rem; flex: 1; font-size: 0.95rem; }
+        .card-bottom { margin-top: auto; }
+        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .tech-tag { background: #333; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; color: var(--text-dim); }
+        .project-link {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            margin-bottom: 1rem; padding: 0.5rem 1.2rem;
+            color: var(--accent); text-decoration: none;
+            font-weight: 600; font-size: 0.85rem;
+            border: 1px solid var(--accent); border-radius: 50px;
+            transition: all 0.3s;
         }
-        /* Animação experimental */
+        .project-link:hover { background: var(--accent); color: var(--bg); }
+        .project-link svg { width: 14px; height: 14px; transition: transform 0.3s; }
+        .project-link:hover svg { transform: translateX(3px); }
+        .badge {
+            display: inline-block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.05em; padding: 0.2rem 0.6rem; border-radius: 20px; margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+        .badge-public { background: var(--accent); color: var(--bg); }
+        .badge-private { background: #333; color: var(--text-dim); }
+        footer { text-align: center; padding: 2rem; background: #000; color: var(--text-dim); font-size: 0.9rem; }
+        @media (max-width: 768px) {
+            nav ul { flex-direction: column; gap: 1rem; align-items: center; }
+            .hero { padding: 3rem 5% 2rem; }
+            .projects { grid-template-columns: 1fr; }
+        }
         @keyframes glow { 0%,100%{filter:brightness(1);} 50%{filter:brightness(1.3) drop-shadow(0 0 12px var(--accent));} }
         .hero h1 { animation: glow 3s ease-in-out infinite; }
     </style>
@@ -80,7 +101,7 @@
         <nav>
             <ul>
                 <li><a href="#home" class="active">Labs</a></li>
-                <!-- <li><a href="#projects">Projetos</a></li> -->
+                <li><a href="#projects">Projetos</a></li>
                 <li><a href="#about">Sobre</a></li>
                 <li><a href="#contact">Contacto</a></li>
             </ul>
@@ -90,53 +111,105 @@
     <section id="home" class="hero">
         <h1>Wess Labs</h1>
         <p>Experimentos pessoais em code, IA, música, café e cubos. Onde ideias viram protótipos.</p>
-        <!-- <a href="#projects" class="cta">Explorar Experimentos</a> -->
+        <a href="#projects" class="cta">Explorar Projetos</a>
     </section>
 
-    <!--
     <section id="projects" class="section">
-        <h2 style="text-align:center; margin-bottom:3rem; font-size:2.5rem;">Experimentos Recentes</h2>
+        <h2 class="section-title">Projetos</h2>
         <div class="projects">
+
             <div class="project-card">
-                <h3>Análise de Lyrics com IA</h3>
-                <p>App Python que puxa letras, traduz e gera facts interessantes via LLM local.</p>
-                <a href="#" class="project-link">Ver Demo →</a>
+                <h3>Satsboard <span class="badge badge-public">Publico</span></h3>
+                <p>Dashboard de Bitcoin com preço em tempo real, métricas de rede, dados de mempool, análise de sentimento, MVRV on-chain e um indicador composto de "BTC Health Score".</p>
+                <div class="card-bottom">
+                    <a href="https://satsboard.wesslabs.com/" target="_blank" rel="noopener" class="project-link">Aceder app <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Next.js</span>
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Tailwind CSS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>LyraVeil <span class="badge badge-private">Privado</span></h3>
+                <p>Ferramenta de análise musical com IA que oferece traduções linha-a-linha, análise de vocabulário, interpretação narrativa e síntese de voz (TTS). Suporta LLM local via Ollama e provedores cloud (OpenAI, Anthropic) via BYOK.</p>
                 <div class="tech-tags">
                     <span class="tech-tag">Python</span>
+                    <span class="tech-tag">FastAPI</span>
+                    <span class="tech-tag">Ollama</span>
                     <span class="tech-tag">OpenAI</span>
-                    <span class="tech-tag">Next.js</span>
+                    <span class="tech-tag">Anthropic</span>
+                    <span class="tech-tag">Spotify API</span>
                 </div>
             </div>
+
             <div class="project-card">
-                <h3>Speedcubing Timer</h3>
-                <p>Timer preciso para Fridrich method com stats e algoritmos visuais.</p>
-                <a href="#" class="project-link">Ver Demo →</a>
+                <h3>WhisperSubs <span class="badge badge-private">Privado</span></h3>
+                <p>Gerador de legendas (.srt) e transcrições (.txt) a partir de vídeos do YouTube usando Whisper da OpenAI. Instalável como PWA em iOS, macOS e Android.</p>
                 <div class="tech-tags">
-                    <span class="tech-tag">React</span>
-                    <span class="tech-tag">Tailwind</span>
-                    <span class="tech-tag">Vercel</span>
-                </div>
-            </div>
-            <div class="project-card">
-                <h3>Prep Café V60 Calculator</h3>
-                <p>Calculadora de ratios para brewing perfeito, com histórico de sessões.</p>
-                <a href="#" class="project-link">Ver Demo →</a>
-                <div class="tech-tags">
-                    <span class="tech-tag">HTML/CSS/JS</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Flask</span>
+                    <span class="tech-tag">Whisper</span>
                     <span class="tech-tag">PWA</span>
                 </div>
             </div>
+
+            <div class="project-card">
+                <h3>NexTranslate <span class="badge badge-private">Privado</span></h3>
+                <p>Aplicação de tradução com IA local via Ollama. Tradução privada e offline, sem enviar dados para serviços externos.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Next.js</span>
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">TypeScript</span>
+                    <span class="tech-tag">Ollama</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>GymProgress <span class="badge badge-private">Privado</span></h3>
+                <p>App de tracking de treinos de musculação com registo de exercícios, progressão de carga, histórico de sessões e gráficos de performance por exercício.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Flask</span>
+                    <span class="tech-tag">SQLite</span>
+                    <span class="tech-tag">JavaScript</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>SpeedCubeTimer <span class="badge badge-private">Privado</span></h3>
+                <p>Timer para speedcubing com geração de scrambles, tracking de solves, estatísticas (ao5/ao12/ao50/ao100) e integração com timers físicos Stackmat e GAN/QiYi via Bluetooth.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">FastAPI</span>
+                    <span class="tech-tag">Web Bluetooth</span>
+                    <span class="tech-tag">PWA</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>SpeedCubeLab <span class="badge badge-private">Privado</span></h3>
+                <p>Biblioteca interativa de algoritmos de speedcubing com todos os 57 casos OLL e 21 PLL, visualização 3D, imagens de padrões e animação passo-a-passo.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">FastAPI</span>
+                    <span class="tech-tag">cubing.js</span>
+                    <span class="tech-tag">JavaScript</span>
+                </div>
+            </div>
+
         </div>
     </section>
-    -->
 
     <section id="about" class="section" style="text-align:center; max-width:800px;">
-        <h2 style="font-size:2.5rem; margin-bottom:2rem;">O que rola aqui?</h2>
+        <h2 class="section-title">O que rola aqui?</h2>
         <p>Wesley Santana (Porto, PT). Dev full-stack com foco em Salesforce, Next.js e IA. Este lab é para testar ideias malucas: de análise musical a automações de café. Aberto a colaborações!</p>
     </section>
 
     <section id="contact" class="section" style="text-align:center;">
-        <h2 style="font-size:2.5rem; margin-bottom:2rem;">Entra no Lab</h2>
+        <h2 class="section-title">Entra no Lab</h2>
         <p><a href="mailto:hello@wesslabs.com" style="color:var(--accent); font-size:1.2rem;">hello@wesslabs.com</a> | <a href="https://www.linkedin.com/in/wesleyfsantana/" style="color:var(--accent);">LinkedIn</a> | <a href="https://github.com/sammwess" style="color:var(--accent);">GitHub</a></p>
     </section>
 
@@ -145,7 +218,6 @@
     </footer>
 
     <script>
-        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault(); document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
