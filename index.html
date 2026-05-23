@@ -12,11 +12,11 @@
     <title>Wess Labs - Experimentos Pessoais</title>
     <style>
         :root {
-            --bg: #0a0a0a;
-            --accent: #00ff88;
-            --text: #ffffff;
-            --text-dim: #a0a0a0;
-            --card-bg: #1a1a1a;
+            --bg: #F5F7FA;
+            --accent: #2563EB;
+            --text: #475569;
+            --text-dim: #94A3B8;
+            --card-bg: #FFFFFF;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -27,26 +27,54 @@
             overflow-x: hidden;
         }
         header {
-            padding: 2rem 5%;
-            border-bottom: 1px solid #333;
+            padding: 1.5rem 5%;
+            border-bottom: 1px solid #1E2530;
             position: sticky; top: 0; backdrop-filter: blur(20px); z-index: 10;
-            background: rgba(10, 10, 10, 0.8);
+            background: rgba(245, 247, 250, 0.9);
         }
+        nav { display: flex; align-items: center; justify-content: center; gap: 2rem; }
         nav ul {
             list-style: none; display: flex; gap: 2rem; justify-content: center;
         }
         nav a { color: var(--text-dim); text-decoration: none; font-weight: 500; transition: all 0.3s; }
         nav a:hover, nav a.active { color: var(--accent); }
+        .lang-selector {
+            position: relative;
+        }
+        .lang-btn {
+            background: transparent; border: 1px solid #E2E8F0; border-radius: 8px;
+            color: var(--text-dim); padding: 0.35rem 0.7rem; font-size: 0.8rem;
+            cursor: pointer; display: flex; align-items: center; gap: 0.35rem;
+            transition: all 0.3s;
+        }
+        .lang-btn:hover { border-color: var(--accent); color: var(--text); }
+        .lang-btn svg { width: 12px; height: 12px; transition: transform 0.2s; }
+        .lang-selector.open .lang-btn svg { transform: rotate(180deg); }
+        .lang-dropdown {
+            display: none; position: absolute; top: calc(100% + 0.5rem); right: 0;
+            background: var(--card-bg); border: 1px solid #E2E8F0; border-radius: 12px;
+            padding: 0.5rem; min-width: 150px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            max-height: 320px; overflow-y: auto;
+        }
+        .lang-selector.open .lang-dropdown { display: block; }
+        .lang-option {
+            display: block; width: 100%; background: none; border: none;
+            color: var(--text-dim); padding: 0.45rem 0.75rem; font-size: 0.8rem;
+            text-align: left; cursor: pointer; border-radius: 8px; transition: all 0.2s;
+        }
+        .lang-option:hover { background: #F1F5F9; color: var(--text); }
+        .lang-option.active { color: var(--accent); }
         .hero {
             text-align: center; padding: 5rem 5% 3rem; max-width: 800px; margin: 0 auto;
         }
         .hero h1 {
             font-size: clamp(2.5rem, 8vw, 5rem); margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--accent), #00cc66); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background: linear-gradient(135deg, #2563EB, #7C3AED); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .hero p { font-size: 1.3rem; color: var(--text-dim); margin-bottom: 2rem; }
         .cta {
-            background: var(--accent); color: var(--bg); padding: 1rem 2rem; border: none;
+            background: var(--accent); color: #FFFFFF; padding: 1rem 2rem; border: none;
             font-size: 1.1rem; font-weight: 600; border-radius: 50px; cursor: pointer;
             transition: transform 0.3s; text-decoration: none; display: inline-block;
         }
@@ -56,18 +84,18 @@
         .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; }
         .project-card {
             background: var(--card-bg); border-radius: 20px; padding: 2rem; transition: all 0.4s;
-            border: 1px solid #333; position: relative; overflow: hidden;
+            border: 1px solid #E2E8F0; position: relative; overflow: hidden;
             display: flex; flex-direction: column;
         }
         .project-card:hover {
-            transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,255,136,0.12);
+            transform: translateY(-6px); box-shadow: 0 16px 32px rgba(37,99,235,0.1);
             border-color: var(--accent);
         }
         .project-card h3 { color: var(--accent); margin-bottom: 0.75rem; font-size: 1.25rem; }
         .project-card p { color: var(--text-dim); margin-bottom: 1.25rem; flex: 1; font-size: 0.95rem; }
         .card-bottom { margin-top: auto; }
         .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .tech-tag { background: #333; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; color: var(--text-dim); }
+        .tech-tag { background: #F1F5F9; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; color: var(--text-dim); }
         .project-link {
             display: inline-flex; align-items: center; gap: 0.4rem;
             margin-bottom: 1rem; padding: 0.5rem 1.2rem;
@@ -76,7 +104,7 @@
             border: 1px solid var(--accent); border-radius: 50px;
             transition: all 0.3s;
         }
-        .project-link:hover { background: var(--accent); color: var(--bg); }
+        .project-link:hover { background: var(--accent); color: #FFFFFF; }
         .project-link svg { width: 14px; height: 14px; transition: transform 0.3s; }
         .project-link:hover svg { transform: translateX(3px); }
         .badge {
@@ -84,16 +112,15 @@
             letter-spacing: 0.05em; padding: 0.2rem 0.6rem; border-radius: 20px; margin-left: 0.5rem;
             vertical-align: middle;
         }
-        .badge-public { background: var(--accent); color: var(--bg); }
-        .badge-private { background: #333; color: var(--text-dim); }
-        footer { text-align: center; padding: 2rem; background: #000; color: var(--text-dim); font-size: 0.9rem; }
+        .badge-public { background: #DBEAFE; color: #1D4ED8; }
+        .badge-private { background: #F1F5F9; color: var(--text-dim); }
+        footer { text-align: center; padding: 2rem; background: #EDF0F5; color: var(--text-dim); font-size: 0.9rem; }
         @media (max-width: 768px) {
+            nav { flex-wrap: wrap; }
             nav ul { flex-direction: column; gap: 1rem; align-items: center; }
             .hero { padding: 3rem 5% 2rem; }
             .projects { grid-template-columns: 1fr; }
         }
-        @keyframes glow { 0%,100%{filter:brightness(1);} 50%{filter:brightness(1.3) drop-shadow(0 0 12px var(--accent));} }
-        .hero h1 { animation: glow 3s ease-in-out infinite; }
     </style>
 </head>
 <body>
@@ -101,28 +128,35 @@
         <nav>
             <ul>
                 <li><a href="#home" class="active">Labs</a></li>
-                <li><a href="#projects">Projetos</a></li>
-                <li><a href="#about">Sobre</a></li>
-                <li><a href="#contact">Contacto</a></li>
+                <li><a href="#projects" data-i18n="nav.projects">Projetos</a></li>
+                <li><a href="#about" data-i18n="nav.about">Sobre</a></li>
+                <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
             </ul>
+            <div class="lang-selector" id="langSelector">
+                <button class="lang-btn" id="langBtn">
+                    <span id="langLabel">PT</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="lang-dropdown" id="langDropdown"></div>
+            </div>
         </nav>
     </header>
 
     <section id="home" class="hero">
         <h1>Wess Labs</h1>
-        <p>Experimentos pessoais em code, IA, música, Bitcoin e cubos. Onde ideias viram protótipos.</p>
-        <a href="#projects" class="cta">Explorar Projetos</a>
+        <p data-i18n="hero.subtitle">Experimentos pessoais em code, IA, música, Bitcoin e cubos. Onde ideias viram protótipos.</p>
+        <a href="#projects" class="cta" data-i18n="hero.cta">Explorar Projetos</a>
     </section>
 
     <section id="projects" class="section">
-        <h2 class="section-title">Projetos</h2>
+        <h2 class="section-title" data-i18n="section.projects">Projetos</h2>
         <div class="projects">
 
             <div class="project-card">
-                <h3>Satsboard <span class="badge badge-public">Publico</span></h3>
-                <p>Dashboard de Bitcoin com preço em tempo real, métricas de rede, dados de mempool, análise de sentimento, MVRV on-chain e um indicador composto de "BTC Health Score".</p>
+                <h3>Satsboard <span class="badge badge-public" data-i18n="badge.public">Publico</span></h3>
+                <p data-i18n="project.satsboard">Dashboard de Bitcoin com preço em tempo real, métricas de rede, dados de mempool, análise de sentimento, MVRV on-chain e um indicador composto de "BTC Health Score".</p>
                 <div class="card-bottom">
-                    <a href="https://satsboard.wesslabs.com/" target="_blank" rel="noopener" class="project-link">Aceder app <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                    <a href="https://satsboard.wesslabs.com/" target="_blank" rel="noopener" class="project-link"><span data-i18n="link.open">Aceder app</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
                     <div class="tech-tags">
                         <span class="tech-tag">Next.js</span>
                         <span class="tech-tag">React</span>
@@ -133,8 +167,8 @@
             </div>
 
             <div class="project-card">
-                <h3>LyraVeil <span class="badge badge-private">Privado</span></h3>
-                <p>Ferramenta de análise musical com IA que oferece traduções linha-a-linha, análise de vocabulário, interpretação narrativa e síntese de voz (TTS). Suporta LLM local via Ollama e provedores cloud (OpenAI, Anthropic) via BYOK.</p>
+                <h3>LyraVeil <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
+                <p data-i18n="project.lyraveil">Ferramenta de análise musical com IA que oferece traduções linha-a-linha, análise de vocabulário, interpretação narrativa e síntese de voz (TTS). Suporta LLM local via Ollama e provedores cloud (OpenAI, Anthropic) via BYOK.</p>
                 <div class="tech-tags">
                     <span class="tech-tag">Python</span>
                     <span class="tech-tag">FastAPI</span>
@@ -146,8 +180,8 @@
             </div>
 
             <div class="project-card">
-                <h3>WhisperSubs <span class="badge badge-private">Privado</span></h3>
-                <p>Gerador de legendas (.srt) e transcrições (.txt) a partir de vídeos do YouTube usando Whisper da OpenAI. Instalável como PWA em iOS, macOS e Android.</p>
+                <h3>WhisperSubs <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
+                <p data-i18n="project.whispersubs">Gerador de legendas (.srt) e transcrições (.txt) a partir de vídeos do YouTube usando Whisper da OpenAI. Instalável como PWA em iOS, macOS e Android.</p>
                 <div class="tech-tags">
                     <span class="tech-tag">Python</span>
                     <span class="tech-tag">Flask</span>
@@ -157,8 +191,8 @@
             </div>
 
             <div class="project-card">
-                <h3>NexTranslate <span class="badge badge-private">Privado</span></h3>
-                <p>Aplicação de tradução com IA local via Ollama. Tradução privada e offline, sem enviar dados para serviços externos.</p>
+                <h3>NexTranslate <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
+                <p data-i18n="project.nextranslate">Aplicação de tradução com IA local via Ollama. Tradução privada e offline, sem enviar dados para serviços externos.</p>
                 <div class="tech-tags">
                     <span class="tech-tag">Next.js</span>
                     <span class="tech-tag">React</span>
@@ -168,8 +202,8 @@
             </div>
 
             <div class="project-card">
-                <h3>GymProgress <span class="badge badge-private">Privado</span></h3>
-                <p>App de tracking de treinos de musculação com registo de exercícios, progressão de carga, histórico de sessões e gráficos de performance por exercício.</p>
+                <h3>GymProgress <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
+                <p data-i18n="project.gymprogress">App de tracking de treinos de musculação com registo de exercícios, progressão de carga, histórico de sessões e gráficos de performance por exercício.</p>
                 <div class="tech-tags">
                     <span class="tech-tag">Python</span>
                     <span class="tech-tag">Flask</span>
@@ -179,8 +213,8 @@
             </div>
 
             <div class="project-card">
-                <h3>SpeedCubeTimer <span class="badge badge-private">Privado</span></h3>
-                <p>Timer para speedcubing com geração de scrambles, tracking de solves, estatísticas (ao5/ao12/ao50/ao100) e integração com timers físicos Stackmat e GAN/QiYi via Bluetooth.</p>
+                <h3>SpeedCubeTimer <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
+                <p data-i18n="project.speedcubetimer">Timer para speedcubing com geração de scrambles, tracking de solves, estatísticas (ao5/ao12/ao50/ao100) e integração com timers físicos Stackmat e GAN/QiYi via Bluetooth.</p>
                 <div class="tech-tags">
                     <span class="tech-tag">Python</span>
                     <span class="tech-tag">FastAPI</span>
@@ -190,8 +224,8 @@
             </div>
 
             <div class="project-card">
-                <h3>SpeedCubeLab <span class="badge badge-private">Privado</span></h3>
-                <p>Biblioteca interativa de algoritmos de speedcubing com todos os 57 casos OLL e 21 PLL, visualização 3D, imagens de padrões e animação passo-a-passo.</p>
+                <h3>SpeedCubeLab <span class="badge badge-private" data-i18n="badge.private">Privado</span></h3>
+                <p data-i18n="project.speedcubelab">Biblioteca interativa de algoritmos de speedcubing com todos os 57 casos OLL e 21 PLL, visualização 3D, imagens de padrões e animação passo-a-passo.</p>
                 <div class="tech-tags">
                     <span class="tech-tag">Python</span>
                     <span class="tech-tag">FastAPI</span>
@@ -204,25 +238,357 @@
     </section>
 
     <section id="about" class="section" style="text-align:center; max-width:800px;">
-        <h2 class="section-title">O que rola aqui?</h2>
-        <p>Wesley Santana (Porto, PT). Dev full-stack com foco em Salesforce, Next.js e IA. Este lab é para testar ideias malucas: de análise musical a dashboards de Bitcoin. Colaborações em breve!</p>
+        <h2 class="section-title" data-i18n="section.about">O que rola aqui?</h2>
+        <p data-i18n="about.text">Wesley Santana (Porto, PT). Dev full-stack com foco em Salesforce, Next.js e IA. Este lab é para testar ideias malucas: de análise musical a dashboards de Bitcoin. Colaborações em breve!</p>
     </section>
 
     <section id="contact" class="section" style="text-align:center;">
-        <h2 class="section-title">Vamos trocar ideias?</h2>
+        <h2 class="section-title" data-i18n="section.contact">Vamos trocar ideias?</h2>
         <p><a href="mailto:hello@wesslabs.com" style="color:var(--accent); font-size:1.2rem;">hello@wesslabs.com</a> | <a href="https://www.linkedin.com/in/wesleyfsantana/" style="color:var(--accent);">LinkedIn</a> | <a href="https://github.com/sammwess" style="color:var(--accent);">GitHub</a></p>
     </section>
 
     <footer>
-        <p>&copy; 2026 Wess Labs. Construído com curiosidade e linhas de código.</p>
+        <p data-i18n="footer">&copy; 2026 Wess Labs. Construído com curiosidade, AI e linhas de código.</p>
     </footer>
 
     <script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault(); document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-            });
+    const i18n = {
+        pt: {
+            "nav.projects": "Projetos",
+            "nav.about": "Sobre",
+            "nav.contact": "Contacto",
+            "hero.subtitle": "Experimentos pessoais em code, IA, música, Bitcoin e cubos. Onde ideias viram protótipos.",
+            "hero.cta": "Explorar Projetos",
+            "section.projects": "Projetos",
+            "badge.public": "Publico",
+            "badge.private": "Privado",
+            "link.open": "Aceder app",
+            "project.satsboard": "Dashboard de Bitcoin com preço em tempo real, métricas de rede, dados de mempool, análise de sentimento, MVRV on-chain e um indicador composto de \"BTC Health Score\".",
+            "project.lyraveil": "Ferramenta de análise musical com IA que oferece traduções linha-a-linha, análise de vocabulário, interpretação narrativa e síntese de voz (TTS). Suporta LLM local via Ollama e provedores cloud (OpenAI, Anthropic) via BYOK.",
+            "project.whispersubs": "Gerador de legendas (.srt) e transcrições (.txt) a partir de vídeos do YouTube usando Whisper da OpenAI. Instalável como PWA em iOS, macOS e Android.",
+            "project.nextranslate": "Aplicação de tradução com IA local via Ollama. Tradução privada e offline, sem enviar dados para serviços externos.",
+            "project.gymprogress": "App de tracking de treinos de musculação com registo de exercícios, progressão de carga, histórico de sessões e gráficos de performance por exercício.",
+            "project.speedcubetimer": "Timer para speedcubing com geração de scrambles, tracking de solves, estatísticas (ao5/ao12/ao50/ao100) e integração com timers físicos Stackmat e GAN/QiYi via Bluetooth.",
+            "project.speedcubelab": "Biblioteca interativa de algoritmos de speedcubing com todos os 57 casos OLL e 21 PLL, visualização 3D, imagens de padrões e animação passo-a-passo.",
+            "section.about": "O que rola aqui?",
+            "about.text": "Wesley Santana (Porto, PT). Dev full-stack com foco em Salesforce, Next.js e IA. Este lab é para testar ideias malucas: de análise musical a dashboards de Bitcoin. Colaborações em breve!",
+            "section.contact": "Vamos trocar ideias?",
+            "footer": "© 2026 Wess Labs. Construído com curiosidade, AI e linhas de código."
+        },
+        en: {
+            "nav.projects": "Projects",
+            "nav.about": "About",
+            "nav.contact": "Contact",
+            "hero.subtitle": "Personal experiments in code, AI, music, Bitcoin and cubes. Where ideas become prototypes.",
+            "hero.cta": "Explore Projects",
+            "section.projects": "Projects",
+            "badge.public": "Public",
+            "badge.private": "Private",
+            "link.open": "Open app",
+            "project.satsboard": "Bitcoin dashboard with real-time price, network metrics, mempool data, sentiment analysis, on-chain MVRV and a composite \"BTC Health Score\" indicator.",
+            "project.lyraveil": "AI-powered music analysis tool with line-by-line translations, vocabulary analysis, narrative interpretation and text-to-speech (TTS). Supports local LLM via Ollama and cloud providers (OpenAI, Anthropic) via BYOK.",
+            "project.whispersubs": "Subtitle (.srt) and transcription (.txt) generator from YouTube videos using OpenAI Whisper. Installable as a PWA on iOS, macOS and Android.",
+            "project.nextranslate": "Translation app powered by local AI via Ollama. Private and offline translation without sending data to external services.",
+            "project.gymprogress": "Strength training tracker with exercise logging, load progression, session history and per-exercise performance charts.",
+            "project.speedcubetimer": "Speedcubing timer with scramble generation, solve tracking, statistics (ao5/ao12/ao50/ao100) and hardware timer integration with Stackmat and GAN/QiYi via Bluetooth.",
+            "project.speedcubelab": "Interactive speedcubing algorithm library with all 57 OLL and 21 PLL cases, 3D visualization, pattern images and step-by-step animation.",
+            "section.about": "What's this about?",
+            "about.text": "Wesley Santana (Porto, PT). Full-stack developer focused on Salesforce, Next.js and AI. This lab is for testing bold ideas: from music analysis to Bitcoin dashboards. Collaborations coming soon!",
+            "section.contact": "Let's share ideas?",
+            "footer": "© 2026 Wess Labs. Built with curiosity, AI and lines of code."
+        },
+        es: {
+            "nav.projects": "Proyectos",
+            "nav.about": "Acerca",
+            "nav.contact": "Contacto",
+            "hero.subtitle": "Experimentos personales en código, IA, música, Bitcoin y cubos. Donde las ideas se convierten en prototipos.",
+            "hero.cta": "Explorar Proyectos",
+            "section.projects": "Proyectos",
+            "badge.public": "Público",
+            "badge.private": "Privado",
+            "link.open": "Abrir app",
+            "project.satsboard": "Dashboard de Bitcoin con precio en tiempo real, métricas de red, datos de mempool, análisis de sentimiento, MVRV on-chain y un indicador compuesto de \"BTC Health Score\".",
+            "project.lyraveil": "Herramienta de análisis musical con IA que ofrece traducciones línea a línea, análisis de vocabulario, interpretación narrativa y síntesis de voz (TTS). Compatible con LLM local vía Ollama y proveedores cloud (OpenAI, Anthropic) vía BYOK.",
+            "project.whispersubs": "Generador de subtítulos (.srt) y transcripciones (.txt) a partir de vídeos de YouTube usando Whisper de OpenAI. Instalable como PWA en iOS, macOS y Android.",
+            "project.nextranslate": "Aplicación de traducción con IA local vía Ollama. Traducción privada y offline, sin enviar datos a servicios externos.",
+            "project.gymprogress": "App de seguimiento de entrenamientos de musculación con registro de ejercicios, progresión de carga, historial de sesiones y gráficos de rendimiento por ejercicio.",
+            "project.speedcubetimer": "Cronómetro para speedcubing con generación de scrambles, seguimiento de solves, estadísticas (ao5/ao12/ao50/ao100) e integración con timers físicos Stackmat y GAN/QiYi vía Bluetooth.",
+            "project.speedcubelab": "Biblioteca interactiva de algoritmos de speedcubing con los 57 casos OLL y 21 PLL, visualización 3D, imágenes de patrones y animación paso a paso.",
+            "section.about": "¿Qué hay aquí?",
+            "about.text": "Wesley Santana (Porto, PT). Dev full-stack con enfoque en Salesforce, Next.js e IA. Este lab es para probar ideas atrevidas: del análisis musical a dashboards de Bitcoin. ¡Colaboraciones pronto!",
+            "section.contact": "¿Compartimos ideas?",
+            "footer": "© 2026 Wess Labs. Construido con curiosidad, IA y líneas de código."
+        },
+        fr: {
+            "nav.projects": "Projets",
+            "nav.about": "À propos",
+            "nav.contact": "Contact",
+            "hero.subtitle": "Expériences personnelles en code, IA, musique, Bitcoin et cubes. Là où les idées deviennent des prototypes.",
+            "hero.cta": "Explorer les Projets",
+            "section.projects": "Projets",
+            "badge.public": "Public",
+            "badge.private": "Privé",
+            "link.open": "Ouvrir l'app",
+            "project.satsboard": "Dashboard Bitcoin avec prix en temps réel, métriques réseau, données mempool, analyse de sentiment, MVRV on-chain et un indicateur composite \"BTC Health Score\".",
+            "project.lyraveil": "Outil d'analyse musicale par IA avec traductions ligne par ligne, analyse de vocabulaire, interprétation narrative et synthèse vocale (TTS). Compatible LLM local via Ollama et fournisseurs cloud (OpenAI, Anthropic) via BYOK.",
+            "project.whispersubs": "Générateur de sous-titres (.srt) et transcriptions (.txt) à partir de vidéos YouTube avec Whisper d'OpenAI. Installable en PWA sur iOS, macOS et Android.",
+            "project.nextranslate": "Application de traduction par IA locale via Ollama. Traduction privée et hors ligne, sans envoyer de données à des services externes.",
+            "project.gymprogress": "App de suivi d'entraînements de musculation avec journal d'exercices, progression de charge, historique de séances et graphiques de performance par exercice.",
+            "project.speedcubetimer": "Chronomètre de speedcubing avec génération de mélanges, suivi de résolutions, statistiques (ao5/ao12/ao50/ao100) et intégration de timers physiques Stackmat et GAN/QiYi via Bluetooth.",
+            "project.speedcubelab": "Bibliothèque interactive d'algorithmes de speedcubing avec les 57 cas OLL et 21 PLL, visualisation 3D, images de motifs et animation étape par étape.",
+            "section.about": "C'est quoi ici ?",
+            "about.text": "Wesley Santana (Porto, PT). Développeur full-stack spécialisé en Salesforce, Next.js et IA. Ce lab sert à tester des idées audacieuses : de l'analyse musicale aux dashboards Bitcoin. Collaborations bientôt !",
+            "section.contact": "On échange des idées ?",
+            "footer": "© 2026 Wess Labs. Construit avec curiosité, IA et lignes de code."
+        },
+        de: {
+            "nav.projects": "Projekte",
+            "nav.about": "Über",
+            "nav.contact": "Kontakt",
+            "hero.subtitle": "Persönliche Experimente in Code, KI, Musik, Bitcoin und Würfel. Wo Ideen zu Prototypen werden.",
+            "hero.cta": "Projekte entdecken",
+            "section.projects": "Projekte",
+            "badge.public": "Öffentlich",
+            "badge.private": "Privat",
+            "link.open": "App öffnen",
+            "project.satsboard": "Bitcoin-Dashboard mit Echtzeitpreis, Netzwerkmetriken, Mempool-Daten, Sentiment-Analyse, On-Chain-MVRV und einem zusammengesetzten \"BTC Health Score\"-Indikator.",
+            "project.lyraveil": "KI-gestütztes Musikanalyse-Tool mit zeilenweiser Übersetzung, Vokabelanalyse, narrativer Interpretation und Sprachsynthese (TTS). Unterstützt lokale LLM via Ollama und Cloud-Anbieter (OpenAI, Anthropic) via BYOK.",
+            "project.whispersubs": "Untertitel- (.srt) und Transkriptionsgenerator (.txt) aus YouTube-Videos mit OpenAI Whisper. Als PWA auf iOS, macOS und Android installierbar.",
+            "project.nextranslate": "Übersetzungs-App mit lokaler KI via Ollama. Private und Offline-Übersetzung ohne Daten an externe Dienste zu senden.",
+            "project.gymprogress": "Krafttraining-Tracker mit Übungsprotokoll, Lastprogression, Sitzungsverlauf und Leistungsdiagrammen pro Übung.",
+            "project.speedcubetimer": "Speedcubing-Timer mit Scramble-Generierung, Solve-Tracking, Statistiken (ao5/ao12/ao50/ao100) und Hardware-Timer-Integration mit Stackmat und GAN/QiYi via Bluetooth.",
+            "project.speedcubelab": "Interaktive Speedcubing-Algorithmus-Bibliothek mit allen 57 OLL- und 21 PLL-Fällen, 3D-Visualisierung, Musterbildern und Schritt-für-Schritt-Animation.",
+            "section.about": "Was gibt's hier?",
+            "about.text": "Wesley Santana (Porto, PT). Full-Stack-Entwickler mit Fokus auf Salesforce, Next.js und KI. Dieses Lab ist zum Testen mutiger Ideen: von Musikanalyse bis Bitcoin-Dashboards. Zusammenarbeit kommt bald!",
+            "section.contact": "Ideen austauschen?",
+            "footer": "© 2026 Wess Labs. Gebaut mit Neugier, KI und Code."
+        },
+        it: {
+            "nav.projects": "Progetti",
+            "nav.about": "Info",
+            "nav.contact": "Contatto",
+            "hero.subtitle": "Esperimenti personali in codice, IA, musica, Bitcoin e cubi. Dove le idee diventano prototipi.",
+            "hero.cta": "Esplora i Progetti",
+            "section.projects": "Progetti",
+            "badge.public": "Pubblico",
+            "badge.private": "Privato",
+            "link.open": "Apri app",
+            "project.satsboard": "Dashboard Bitcoin con prezzo in tempo reale, metriche di rete, dati mempool, analisi del sentiment, MVRV on-chain e un indicatore composito \"BTC Health Score\".",
+            "project.lyraveil": "Strumento di analisi musicale con IA che offre traduzioni riga per riga, analisi del vocabolario, interpretazione narrativa e sintesi vocale (TTS). Supporta LLM locale via Ollama e provider cloud (OpenAI, Anthropic) via BYOK.",
+            "project.whispersubs": "Generatore di sottotitoli (.srt) e trascrizioni (.txt) da video YouTube usando Whisper di OpenAI. Installabile come PWA su iOS, macOS e Android.",
+            "project.nextranslate": "App di traduzione con IA locale via Ollama. Traduzione privata e offline, senza inviare dati a servizi esterni.",
+            "project.gymprogress": "App di monitoraggio allenamenti di muscolazione con registro esercizi, progressione del carico, cronologia sessioni e grafici di prestazione per esercizio.",
+            "project.speedcubetimer": "Timer per speedcubing con generazione di scramble, tracking dei solve, statistiche (ao5/ao12/ao50/ao100) e integrazione con timer fisici Stackmat e GAN/QiYi via Bluetooth.",
+            "project.speedcubelab": "Libreria interattiva di algoritmi di speedcubing con tutti i 57 casi OLL e 21 PLL, visualizzazione 3D, immagini dei pattern e animazione passo-passo.",
+            "section.about": "Cosa c'è qui?",
+            "about.text": "Wesley Santana (Porto, PT). Sviluppatore full-stack con focus su Salesforce, Next.js e IA. Questo lab è per testare idee audaci: dall'analisi musicale alle dashboard Bitcoin. Collaborazioni in arrivo!",
+            "section.contact": "Scambiamo idee?",
+            "footer": "© 2026 Wess Labs. Costruito con curiosità, IA e righe di codice."
+        },
+        nl: {
+            "nav.projects": "Projecten",
+            "nav.about": "Over",
+            "nav.contact": "Contact",
+            "hero.subtitle": "Persoonlijke experimenten in code, AI, muziek, Bitcoin en kubussen. Waar ideeën prototypes worden.",
+            "hero.cta": "Projecten Verkennen",
+            "section.projects": "Projecten",
+            "badge.public": "Openbaar",
+            "badge.private": "Privé",
+            "link.open": "Open app",
+            "project.satsboard": "Bitcoin-dashboard met realtime prijs, netwerkstatistieken, mempool-data, sentimentanalyse, on-chain MVRV en een samengestelde \"BTC Health Score\"-indicator.",
+            "project.lyraveil": "AI-muziekanalysetool met regel-voor-regel vertalingen, woordenschatanalyse, narratieve interpretatie en spraaksynthese (TTS). Ondersteunt lokale LLM via Ollama en cloudproviders (OpenAI, Anthropic) via BYOK.",
+            "project.whispersubs": "Ondertitel- (.srt) en transcriptiegenerator (.txt) van YouTube-video's met OpenAI Whisper. Installeerbaar als PWA op iOS, macOS en Android.",
+            "project.nextranslate": "Vertaalapp met lokale AI via Ollama. Privé en offline vertalen zonder data naar externe diensten te sturen.",
+            "project.gymprogress": "Krachttraining-tracker met oefenregistratie, gewichtsprogressie, sessiegeschiedenis en prestatiegrafieken per oefening.",
+            "project.speedcubetimer": "Speedcubing-timer met scramble-generatie, solve-tracking, statistieken (ao5/ao12/ao50/ao100) en hardware-timer-integratie met Stackmat en GAN/QiYi via Bluetooth.",
+            "project.speedcubelab": "Interactieve speedcubing-algoritmebibliotheek met alle 57 OLL- en 21 PLL-gevallen, 3D-visualisatie, patroonafbeeldingen en stap-voor-stap animatie.",
+            "section.about": "Wat is dit?",
+            "about.text": "Wesley Santana (Porto, PT). Full-stack developer met focus op Salesforce, Next.js en AI. Dit lab is om gedurfde ideeën te testen: van muziekanalyse tot Bitcoin-dashboards. Samenwerkingen binnenkort!",
+            "section.contact": "Ideeën uitwisselen?",
+            "footer": "© 2026 Wess Labs. Gebouwd met nieuwsgierigheid, AI en regels code."
+        },
+        pl: {
+            "nav.projects": "Projekty",
+            "nav.about": "O mnie",
+            "nav.contact": "Kontakt",
+            "hero.subtitle": "Osobiste eksperymenty w kodzie, AI, muzyce, Bitcoinie i kostkach. Gdzie pomysły stają się prototypami.",
+            "hero.cta": "Zobacz Projekty",
+            "section.projects": "Projekty",
+            "badge.public": "Publiczny",
+            "badge.private": "Prywatny",
+            "link.open": "Otwórz app",
+            "project.satsboard": "Dashboard Bitcoina z ceną w czasie rzeczywistym, metrykami sieci, danymi mempool, analizą sentymentu, MVRV on-chain i złożonym wskaźnikiem \"BTC Health Score\".",
+            "project.lyraveil": "Narzędzie do analizy muzyki z AI oferujące tłumaczenia linia po linii, analizę słownictwa, interpretację narracyjną i syntezę mowy (TTS). Obsługuje lokalne LLM przez Ollama i dostawców chmurowych (OpenAI, Anthropic) przez BYOK.",
+            "project.whispersubs": "Generator napisów (.srt) i transkrypcji (.txt) z filmów YouTube przy użyciu Whisper od OpenAI. Instalowalny jako PWA na iOS, macOS i Android.",
+            "project.nextranslate": "Aplikacja do tłumaczeń z lokalnym AI przez Ollama. Prywatne tłumaczenie offline, bez wysyłania danych do zewnętrznych serwisów.",
+            "project.gymprogress": "Aplikacja do śledzenia treningów siłowych z rejestracją ćwiczeń, progresją obciążeń, historią sesji i wykresami wydajności na ćwiczenie.",
+            "project.speedcubetimer": "Timer do speedcubingu z generowaniem scrambli, śledzeniem solve'ów, statystykami (ao5/ao12/ao50/ao100) i integracją z timerami fizycznymi Stackmat i GAN/QiYi przez Bluetooth.",
+            "project.speedcubelab": "Interaktywna biblioteka algorytmów speedcubingowych ze wszystkimi 57 przypadkami OLL i 21 PLL, wizualizacją 3D, obrazami wzorów i animacją krok po kroku.",
+            "section.about": "O co tu chodzi?",
+            "about.text": "Wesley Santana (Porto, PT). Developer full-stack z fokusem na Salesforce, Next.js i AI. To laboratorium do testowania odważnych pomysłów: od analizy muzyki po dashboardy Bitcoina. Współpraca wkrótce!",
+            "section.contact": "Wymieńmy się pomysłami?",
+            "footer": "© 2026 Wess Labs. Zbudowane z ciekawości, AI i linii kodu."
+        },
+        sv: {
+            "nav.projects": "Projekt",
+            "nav.about": "Om",
+            "nav.contact": "Kontakt",
+            "hero.subtitle": "Personliga experiment inom kod, AI, musik, Bitcoin och kuber. Där idéer blir prototyper.",
+            "hero.cta": "Utforska Projekt",
+            "section.projects": "Projekt",
+            "badge.public": "Publik",
+            "badge.private": "Privat",
+            "link.open": "Öppna app",
+            "project.satsboard": "Bitcoin-dashboard med realtidspris, nätverksmetrik, mempool-data, sentimentanalys, on-chain MVRV och en sammansatt \"BTC Health Score\"-indikator.",
+            "project.lyraveil": "AI-drivet musikanalysverktyg med rad-för-rad-översättningar, vokabuläranalys, narrativ tolkning och talsyntes (TTS). Stödjer lokal LLM via Ollama och molnleverantörer (OpenAI, Anthropic) via BYOK.",
+            "project.whispersubs": "Undertext- (.srt) och transkriptionsgenerator (.txt) från YouTube-videor med OpenAI Whisper. Installerbar som PWA på iOS, macOS och Android.",
+            "project.nextranslate": "Översättningsapp med lokal AI via Ollama. Privat och offline-översättning utan att skicka data till externa tjänster.",
+            "project.gymprogress": "Styrketräningstracker med övningsloggning, viktprogression, sessionshistorik och prestandadiagram per övning.",
+            "project.speedcubetimer": "Speedcubing-timer med scramble-generering, solve-tracking, statistik (ao5/ao12/ao50/ao100) och hårdvarutimer-integration med Stackmat och GAN/QiYi via Bluetooth.",
+            "project.speedcubelab": "Interaktivt speedcubing-algoritmbibliotek med alla 57 OLL- och 21 PLL-fall, 3D-visualisering, mönsterbilder och steg-för-steg-animation.",
+            "section.about": "Vad handlar det om?",
+            "about.text": "Wesley Santana (Porto, PT). Full-stack-utvecklare med fokus på Salesforce, Next.js och AI. Det här labbet är för att testa djärva idéer: från musikanalys till Bitcoin-dashboards. Samarbeten kommer snart!",
+            "section.contact": "Utbyta idéer?",
+            "footer": "© 2026 Wess Labs. Byggt med nyfikenhet, AI och kodrader."
+        },
+        da: {
+            "nav.projects": "Projekter",
+            "nav.about": "Om",
+            "nav.contact": "Kontakt",
+            "hero.subtitle": "Personlige eksperimenter i kode, AI, musik, Bitcoin og kuber. Hvor idéer bliver til prototyper.",
+            "hero.cta": "Udforsk Projekter",
+            "section.projects": "Projekter",
+            "badge.public": "Offentlig",
+            "badge.private": "Privat",
+            "link.open": "Åbn app",
+            "project.satsboard": "Bitcoin-dashboard med realtidspris, netværksmetrikker, mempool-data, sentimentanalyse, on-chain MVRV og en sammensat \"BTC Health Score\"-indikator.",
+            "project.lyraveil": "AI-drevet musikanalyseværktøj med linje-for-linje oversættelser, ordforrådsanalyse, narrativ fortolkning og talesyntese (TTS). Understøtter lokal LLM via Ollama og cloud-udbydere (OpenAI, Anthropic) via BYOK.",
+            "project.whispersubs": "Undertekst- (.srt) og transskriptionsgenerator (.txt) fra YouTube-videoer med OpenAI Whisper. Kan installeres som PWA på iOS, macOS og Android.",
+            "project.nextranslate": "Oversættelsesapp med lokal AI via Ollama. Privat og offline oversættelse uden at sende data til eksterne tjenester.",
+            "project.gymprogress": "Styrketræningstracker med øvelsesregistrering, vægtprogression, sessionshistorik og præstationsgrafer per øvelse.",
+            "project.speedcubetimer": "Speedcubing-timer med scramble-generering, solve-tracking, statistikker (ao5/ao12/ao50/ao100) og hardware-timer-integration med Stackmat og GAN/QiYi via Bluetooth.",
+            "project.speedcubelab": "Interaktivt speedcubing-algoritmebibliotek med alle 57 OLL- og 21 PLL-tilfælde, 3D-visualisering, mønsterbilleder og trin-for-trin animation.",
+            "section.about": "Hvad handler det om?",
+            "about.text": "Wesley Santana (Porto, PT). Full-stack-udvikler med fokus på Salesforce, Next.js og AI. Dette lab er til at teste dristige idéer: fra musikanalyse til Bitcoin-dashboards. Samarbejder kommer snart!",
+            "section.contact": "Udveksle idéer?",
+            "footer": "© 2026 Wess Labs. Bygget med nysgerrighed, AI og kodelinjer."
+        },
+        no: {
+            "nav.projects": "Prosjekter",
+            "nav.about": "Om",
+            "nav.contact": "Kontakt",
+            "hero.subtitle": "Personlige eksperimenter i kode, AI, musikk, Bitcoin og kuber. Der idéer blir prototyper.",
+            "hero.cta": "Utforsk Prosjekter",
+            "section.projects": "Prosjekter",
+            "badge.public": "Offentlig",
+            "badge.private": "Privat",
+            "link.open": "Åpne app",
+            "project.satsboard": "Bitcoin-dashboard med sanntidspris, nettverksmetrikker, mempool-data, sentimentanalyse, on-chain MVRV og en sammensatt \"BTC Health Score\"-indikator.",
+            "project.lyraveil": "AI-drevet musikkanalyseverktøy med linje-for-linje oversettelser, ordforrådsanalyse, narrativ tolkning og talesyntese (TTS). Støtter lokal LLM via Ollama og skyleverandører (OpenAI, Anthropic) via BYOK.",
+            "project.whispersubs": "Undertekst- (.srt) og transkripsjonsgenerator (.txt) fra YouTube-videoer med OpenAI Whisper. Installerbar som PWA på iOS, macOS og Android.",
+            "project.nextranslate": "Oversettelsesapp med lokal AI via Ollama. Privat og offline oversettelse uten å sende data til eksterne tjenester.",
+            "project.gymprogress": "Styrketreningstracker med øvelsesregistrering, vektprogresjon, økthistorikk og ytelsesgrafer per øvelse.",
+            "project.speedcubetimer": "Speedcubing-timer med scramble-generering, solve-tracking, statistikk (ao5/ao12/ao50/ao100) og hardware-timer-integrasjon med Stackmat og GAN/QiYi via Bluetooth.",
+            "project.speedcubelab": "Interaktivt speedcubing-algoritmebibliotek med alle 57 OLL- og 21 PLL-tilfeller, 3D-visualisering, mønsterbilder og steg-for-steg-animasjon.",
+            "section.about": "Hva handler dette om?",
+            "about.text": "Wesley Santana (Porto, PT). Full-stack-utvikler med fokus på Salesforce, Next.js og AI. Dette labbet er for å teste dristige idéer: fra musikkanalyse til Bitcoin-dashboards. Samarbeid kommer snart!",
+            "section.contact": "Utveksle idéer?",
+            "footer": "© 2026 Wess Labs. Bygget med nysgjerrighet, AI og kodelinjer."
+        },
+        fi: {
+            "nav.projects": "Projektit",
+            "nav.about": "Tietoa",
+            "nav.contact": "Yhteystiedot",
+            "hero.subtitle": "Henkilökohtaisia kokeiluja koodissa, tekoälyssä, musiikissa, Bitcoinissa ja kuutioissa. Missä ideoista tulee prototyyppejä.",
+            "hero.cta": "Tutustu Projekteihin",
+            "section.projects": "Projektit",
+            "badge.public": "Julkinen",
+            "badge.private": "Yksityinen",
+            "link.open": "Avaa sovellus",
+            "project.satsboard": "Bitcoin-kojelauta reaaliaikaisella hinnalla, verkkometriikoilla, mempool-datalla, sentimenttianalyysillä, on-chain MVRV:llä ja yhdistetyllä \"BTC Health Score\" -indikaattorilla.",
+            "project.lyraveil": "Tekoälypohjainen musiikin analyysityökalu rivi riviltä -käännöksillä, sanastoanalyysillä, kerronnallisella tulkinnalla ja puhesynteesillä (TTS). Tukee paikallista LLM:ää Ollaman kautta ja pilvipalveluntarjoajia (OpenAI, Anthropic) BYOK:n kautta.",
+            "project.whispersubs": "Tekstitys- (.srt) ja transkriptiogeneraattori (.txt) YouTube-videoista OpenAI Whisperillä. Asennettavissa PWA:na iOS:lle, macOS:lle ja Androidille.",
+            "project.nextranslate": "Käännössovellus paikallisella tekoälyllä Ollaman kautta. Yksityinen ja offline-käännös ilman tietojen lähettämistä ulkoisiin palveluihin.",
+            "project.gymprogress": "Voimaharjoittelun seuranta harjoituspäiväkirjalla, kuormituksen etenemisellä, harjoitushistorialla ja suorituskykykaaviolla harjoitusta kohti.",
+            "project.speedcubetimer": "Speedcubing-ajastin scramble-generoinnilla, ratkaisuseurannalla, tilastoilla (ao5/ao12/ao50/ao100) ja laitteistoajastinintegraatiolla Stackmatin ja GAN/QiYin kanssa Bluetoothin kautta.",
+            "project.speedcubelab": "Interaktiivinen speedcubing-algoritmikirjasto kaikilla 57 OLL- ja 21 PLL-tapauksella, 3D-visualisoinnilla, kuviokuvilla ja askel askeleelta -animaatiolla.",
+            "section.about": "Mistä on kyse?",
+            "about.text": "Wesley Santana (Porto, PT). Full-stack-kehittäjä keskittyen Salesforceen, Next.js:ään ja tekoälyyn. Tämä laboratorio on rohkeiden ideoiden testaamiseen: musiikkianalyysistä Bitcoin-kojelautaan. Yhteistyöt tulossa pian!",
+            "section.contact": "Vaihdetaanko ideoita?",
+            "footer": "© 2026 Wess Labs. Rakennettu uteliaisuudella, tekoälyllä ja koodiriveillä."
+        }
+    };
+
+    const langs = [
+        { code: "pt", label: "Português" },
+        { code: "en", label: "English" },
+        { code: "es", label: "Español" },
+        { code: "fr", label: "Français" },
+        { code: "de", label: "Deutsch" },
+        { code: "it", label: "Italiano" },
+        { code: "nl", label: "Nederlands" },
+        { code: "pl", label: "Polski" },
+        { code: "sv", label: "Svenska" },
+        { code: "da", label: "Dansk" },
+        { code: "no", label: "Norsk" },
+        { code: "fi", label: "Suomi" }
+    ];
+
+    function setLang(code) {
+        const t = i18n[code] || i18n.en;
+        document.querySelectorAll("[data-i18n]").forEach(el => {
+            const key = el.getAttribute("data-i18n");
+            if (t[key]) el.textContent = t[key];
         });
+        document.documentElement.lang = code;
+        document.getElementById("langLabel").textContent = code.toUpperCase();
+        document.querySelectorAll(".lang-option").forEach(btn => {
+            btn.classList.toggle("active", btn.dataset.lang === code);
+        });
+        localStorage.setItem("wl-lang", code);
+    }
+
+    function detectLang() {
+        const saved = localStorage.getItem("wl-lang");
+        if (saved && i18n[saved]) return saved;
+        const nav = (navigator.language || "").toLowerCase();
+        const base = nav.split("-")[0];
+        if (i18n[base]) return base;
+        if (nav.startsWith("nb") || nav.startsWith("nn")) return "no";
+        return "pt";
+    }
+
+    (function initLang() {
+        const dropdown = document.getElementById("langDropdown");
+        langs.forEach(l => {
+            const btn = document.createElement("button");
+            btn.className = "lang-option";
+            btn.dataset.lang = l.code;
+            btn.textContent = l.label;
+            btn.addEventListener("click", () => {
+                setLang(l.code);
+                document.getElementById("langSelector").classList.remove("open");
+            });
+            dropdown.appendChild(btn);
+        });
+
+        document.getElementById("langBtn").addEventListener("click", (e) => {
+            e.stopPropagation();
+            document.getElementById("langSelector").classList.toggle("open");
+        });
+        document.addEventListener("click", () => {
+            document.getElementById("langSelector").classList.remove("open");
+        });
+
+        setLang(detectLang());
+    })();
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        });
+    });
     </script>
 </body>
 </html>
